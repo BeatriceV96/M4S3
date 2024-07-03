@@ -1,0 +1,1 @@
+﻿select CategoryID, count(*) as TotalProducts from Products group by CategoryID

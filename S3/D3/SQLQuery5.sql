@@ -1,0 +1,1 @@
+﻿select avg(Freight) as AvarageFreight from Orders
