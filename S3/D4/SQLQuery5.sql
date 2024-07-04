@@ -1,0 +1,1 @@
+﻿Select * from Impiegati where Eta > 29

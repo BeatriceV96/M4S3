@@ -1,0 +1,1 @@
+﻿select Min(RedditoMensile) as RedditoMinimo from Impiegati

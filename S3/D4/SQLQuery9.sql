@@ -1,0 +1,1 @@
+﻿Select * From Impiegati where Cognome Like 'G%' order by Cognome

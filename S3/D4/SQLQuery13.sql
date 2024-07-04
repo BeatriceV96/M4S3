@@ -1,0 +1,1 @@
+﻿select Max(RedditoMensile) as RedditoMassimo from Impiegati
