@@ -42,6 +42,14 @@ VALUES
 ('Esposito', 'Davide', 'Via Firenze, 18', 'Firenze', '50100', 'SPSDVD80H12L219Z'),
 ('Bianchi', 'Sara', 'Via Genova, 45', 'Genova', '16100', 'BNCGNI85D22H501Z');
 
+﻿INSERT INTO TipoViolazione (Descrizione, Importo)
+VALUES 
+('Eccesso di velocità', 150.00),
+('Parcheggio in divieto di sosta', 80.00),
+('Guida senza cinture', 100.00),
+('Uso del cellulare alla guida', 200.00),
+('Passaggio con semaforo rosso', 400.00);
+
 
 ------------------------------------------------------------------------------------------------------------------------------------------
 
