@@ -1,1 +1,0 @@
-﻿select CustomerID, SUM(Freight) as TotalFreight from Orders group by CustomerID

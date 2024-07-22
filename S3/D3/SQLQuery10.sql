@@ -1,1 +1,0 @@
-﻿Select OrderID, SUM(UnitPrice * Quantity) as TotalPrice from [Order Details] where OrderID = 10248 group by OrderID

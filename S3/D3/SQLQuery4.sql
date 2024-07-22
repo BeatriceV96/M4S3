@@ -1,1 +1,0 @@
-﻿Select count(*) as CustomersInLondon from Customers where City = 'London'

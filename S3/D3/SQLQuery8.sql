@@ -1,1 +1,0 @@
-﻿select City, count(*) as CustomersInCity from Customers group by City

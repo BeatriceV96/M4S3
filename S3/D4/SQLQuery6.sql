@@ -1,1 +1,0 @@
-﻿Select * from Impiegati where RedditoMensile >= 800.00
