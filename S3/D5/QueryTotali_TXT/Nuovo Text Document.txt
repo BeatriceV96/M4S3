@@ -31,7 +31,35 @@ CREATE TABLE [dbo].[Verbale] (
     FOREIGN KEY ([IdViolazione]) REFERENCES [dbo].[TipoViolazione] ([IdViolazione])
 );
 
-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------------
+﻿INSERT INTO Anagrafica (Cognome, Nome, Indirizzo, Citta, CAP, Cod_Fisc)
+VALUES 
+('Rossi', 'Mario', 'Via Roma, 10', 'Palermo', '90100', 'RSSMRA80A01H501Z'),
+('Bianchi', 'Luca', 'Via Milano, 20', 'Milano', '20100', 'BNCALU85B02F205Z'),
+('Verdi', 'Giulia', 'Via Napoli, 5', 'Napoli', '80100', 'VRDGLI90A01F205Z'),
+('Russo', 'Alessandro', 'Via Torino, 15', 'Torino', '10100', 'RSSALS85C01L219Z'),
+('Ferrari', 'Francesca', 'Via Venezia, 22', 'Venezia', '30100', 'FRRFNC75M41L219Z'),
+('Esposito', 'Davide', 'Via Firenze, 18', 'Firenze', '50100', 'SPSDVD80H12L219Z'),
+('Bianchi', 'Sara', 'Via Genova, 45', 'Genova', '16100', 'BNCGNI85D22H501Z');
+
+﻿INSERT INTO TipoViolazione (Descrizione, Importo)
+VALUES 
+('Eccesso di velocità', 150.00),
+('Parcheggio in divieto di sosta', 80.00),
+('Guida senza cinture', 100.00),
+('Uso del cellulare alla guida', 200.00),
+('Passaggio con semaforo rosso', 400.00);
+
+INSERT INTO Verbale (IdAnagrafica, IdViolazione, DataViolazione, IndirizzoViolazione, Nominativo_Agente, DataTrascrizioneVerbale, Importo, DecurtamentoPunti)
+VALUES 
+(1, 1, '15/06/2009 00:00:00', 'Via Roma, 20', 'Agente Rossi', '16/06/2023 00:00:00', 450.0000, 2),
+(2, 2, '01/07/2023 00:00:00', 'Via Milano, 30', 'Agente Bianchi', '02/07/2023 00:00:00', 80.0000, 1),
+(3, 3, '10/05/2008 00:00:00', 'Via Napoli, 5', 'Agente Verdi', '11/05/2023 00:00:00', 100.0000, 5),
+(4, 4, '20/04/2023 00:00:00', 'Via Torino, 15', 'Agente Russo', '21/04/2023 00:00:00', 420.0000, 3),
+(5, 5, '25/03/2023 00:00:00', 'Via Venezia, 22', 'Agente Ferrari', '26/03/2023 00:00:00', 250.0000, 6),
+(6, 1, '28/02/2023 00:00:00', 'Via Firenze, 18', 'Agente Esposito', '01/03/2023 00:00:00', 150.0000, 2),
+(7, 2, '15/06/2023 00:00:00', 'Via Genova, 45', 'Agente Bianchi', '16/01/2023 00:00:00', 80.0000, 1);
+------------------------------------------------------------------------------------------------------------------------------------------
 
 1) SELECT COUNT(*) AS ConteggioVerbali FROM Verbale;
 -----------------------------------------------------------------------------
