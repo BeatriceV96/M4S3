@@ -1,0 +1,43 @@
+﻿@model IEnumerable<Weeklyapp.DataLayer.Entities.Cliente>
+
+@{
+    ViewData["Title"] = "Lista Clienti";
+}
+
+<h2>Lista Clienti</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Codice Fiscale</th>
+            <th>Cognome</th>
+            <th>Nome</th>
+            <th>Città</th>
+            <th>Provincia</th>
+            <th>Email</th>
+            <th>Telefono</th>
+            <th>Cellulare</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var cliente in Model)
+        {
+            <tr>
+                <td>@cliente.CodiceFiscale</td>
+                <td>@cliente.Cognome</td>
+                <td>@cliente.Nome</td>
+                <td>@cliente.Citta</td>
+                <td>@cliente.Provincia</td>
+                <td>@cliente.Email</td>
+                <td>@cliente.Telefono</td>
+                <td>@cliente.Cellulare</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@cliente.CodiceFiscale">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@cliente.CodiceFiscale">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@cliente.CodiceFiscale">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

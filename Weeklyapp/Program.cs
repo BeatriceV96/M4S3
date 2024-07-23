@@ -1,10 +1,27 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Weeklyapp.DataLayer.Entities;
+using Weeklyapp.DataLayer.Services.Interfaces;
+using Weeklyapp.DataLayer.Services.Data;
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddScoped<ClienteService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<DbContext>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-var app = builder.Build();
 
+
+// Configura l'autenticazione
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.LoginPath = "/Account/Login";
+    });
+
+var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
@@ -18,6 +35,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
