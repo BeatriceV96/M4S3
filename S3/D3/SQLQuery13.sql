@@ -1,1 +1,0 @@
-﻿select ShipCountry, avg(Freight) as AvarageFreight from Orders group by ShipCountry

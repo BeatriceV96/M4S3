@@ -1,1 +1,0 @@
-﻿select sum(RedditoMensile) as TotaleRedditi from Impiegati
