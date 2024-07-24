@@ -1,39 +1,22 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using Weeklyapp.Services;
 using Weeklyapp.DataLayer.Entities;
-using Weeklyapp.DataLayer.Services.Interfaces;
 
 namespace Weeklyapp.Controllers
 {
-    [Authorize]
     public class ClientiController : Controller
     {
-        private readonly IClienteService _clienteService;
+        private readonly ClienteService clienteService;
 
-        public ClientiController(IClienteService clienteService)
+        public ClientiController(ClienteService clienteService)
         {
-            _clienteService = clienteService;
+            this.clienteService = clienteService;
         }
 
         public IActionResult Index()
         {
-            var clienti = _clienteService.ReadAll();
+            var clienti = clienteService.GetAll();
             return View(clienti);
-        }
-
-        public IActionResult Details(string id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var cliente = _clienteService.Read(id);
-            if (cliente == null)
-            {
-                return NotFound();
-            }
-            return View(cliente);
         }
 
         public IActionResult Create()
@@ -42,68 +25,14 @@ namespace Weeklyapp.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(Cliente cliente)
+        public IActionResult Create(ClienteEntity cliente)
         {
             if (ModelState.IsValid)
             {
-                _clienteService.Create(cliente);
-                return RedirectToAction(nameof(Index));
+                clienteService.Create(cliente);
+                return RedirectToAction("Index");
             }
             return View(cliente);
-        }
-
-        public IActionResult Edit(string id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var cliente = _clienteService.Read(id);
-            if (cliente == null)
-            {
-                return NotFound();
-            }
-            return View(cliente);
-        }
-
-        [HttpPost]
-        public IActionResult Edit(string id, Cliente cliente)
-        {
-            if (id != cliente.CodiceFiscale)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                _clienteService.Update(cliente);
-                return RedirectToAction(nameof(Index));
-            }
-            return View(cliente);
-        }
-
-        public IActionResult Delete(string id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var cliente = _clienteService.Read(id);
-            if (cliente == null)
-            {
-                return NotFound();
-            }
-
-            return View(cliente);
-        }
-
-        [HttpPost, ActionName("Delete")]
-        public IActionResult DeleteConfirmed(string id)
-        {
-            _clienteService.Delete(id);
-            return RedirectToAction(nameof(Index));
         }
     }
 }

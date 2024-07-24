@@ -1,0 +1,77 @@
+﻿@model IEnumerable<Weeklyapp.DataLayer.Entities.ServizioAggiuntivoEntity>
+
+@{
+    ViewData["Title"] = "Servizi Aggiuntivi";
+}
+
+<div class="container mt-4">
+    <div class="text-center mb-4">
+        <h2>Elenco e Creazione/Modifica Servizi Aggiuntivi</h2>
+    </div>
+    <div class="mb-3 text-right">
+        <a class="btn btn-primary" asp-action="Create">Crea</a>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h3 class="card-title">Elenco Servizi Aggiuntivi</h3>
+                    <table class="table table-hover">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>ID</th>
+                                <th>ID Prenotazione</th>
+                                <th>Data Servizio</th>
+                                <th>Descrizione</th>
+                                <th>Quantità</th>
+                                <th>Prezzo</th>
+                                <th>Azioni</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var servizio in Model)
+                            {
+                                <tr>
+                                    <td>@servizio.ID</td>
+                                    <td>@servizio.IDPrenotazione</td>
+                                    <td>@servizio.DataServizio</td>
+                                    <td>@servizio.Descrizione</td>
+                                    <td>@servizio.Quantita</td>
+                                    <td>@servizio.Prezzo</td>
+                                    <td>
+                                        <a class="btn btn-warning" asp-action="Edit" asp-route-id="@servizio.ID">Modifica</a>
+                                        <a class="btn btn-danger" asp-action="Delete" asp-route-id="@servizio.ID">Elimina</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .card {
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+        .card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+        }
+
+    .form-group label {
+        font-weight: bold;
+    }
+
+    .text-center {
+        text-align: center;
+    }
+
+    .btn {
+        margin-right: 5px;
+    }
+</style>

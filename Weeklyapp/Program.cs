@@ -1,14 +1,22 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Weeklyapp.DataLayer.Services.Interfaces;
+using Weeklyapp.Services;
+using Weeklyapp.DAO;
+using Weeklyapp.DataLayer.Entities;
 using Weeklyapp.DataLayer.Services.Data;
+using Weeklyapp.DataLayer.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Configura i servizi dell'applicazione
-builder.Services.AddScoped<IClienteService, ClienteService>();
-builder.Services.AddScoped<IPrenotazioneService, PrenotazioneService>();
-builder.Services.AddScoped<ICameraService, CameraService>();
-builder.Services.AddScoped<IServizioAggiuntivoService, ServizioAggiuntivoService>();
+builder.Services.AddScoped<ClienteDao>();
+builder.Services.AddScoped<CameraDao>();
+builder.Services.AddScoped<PrenotazioneDao>();
+builder.Services.AddScoped<ServizioAggiuntivoDao>();
+
+builder.Services.AddScoped<ClienteService>();
+builder.Services.AddScoped<CameraService>();
+builder.Services.AddScoped<PrenotazioneService>();
+builder.Services.AddScoped<ServizioAggiuntivoService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 
 // Aggiungi servizi al container

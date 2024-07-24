@@ -1,69 +1,69 @@
-﻿@model Weeklyapp.DataLayer.Entities.Cliente
+﻿@model Weeklyapp.DataLayer.Entities.ClienteEntity
 
-@{
-    ViewData["Title"] = "Create Cliente";
-}
-
-<h2>Create Cliente</h2>
-
-<h4>Cliente</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div class="form-group">
-                <label asp-for="CodiceFiscale" class="control-label"></label>
-                <input asp-for="CodiceFiscale" class="form-control" />
-                <span asp-validation-for="CodiceFiscale" class="text-danger"></span>
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h3 class="card-title text-center">Crea Cliente</h3>
+                    <form asp-action="Create">
+                        <div class="form-group">
+                            <label asp-for="CodiceFiscale" class="form-label"></label>
+                            <input asp-for="CodiceFiscale" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Cognome" class="form-label"></label>
+                            <input asp-for="Cognome" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Nome" class="form-label"></label>
+                            <input asp-for="Nome" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Citta" class="form-label"></label>
+                            <input asp-for="Citta" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Provincia" class="form-label"></label>
+                            <input asp-for="Provincia" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Email" class="form-label"></label>
+                            <input asp-for="Email" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Telefono" class="form-label"></label>
+                            <input asp-for="Telefono" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Cellulare" class="form-label"></label>
+                            <input asp-for="Cellulare" class="form-control" />
+                        </div>
+                        <div class="text-center">
+                            <input type="submit" value="Crea" class="btn btn-primary mt-3" />
+                        </div>
+                    </form>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Cognome" class="control-label"></label>
-                <input asp-for="Cognome" class="form-control" />
-                <span asp-validation-for="Cognome" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Nome" class="control-label"></label>
-                <input asp-for="Nome" class="form-control" />
-                <span asp-validation-for="Nome" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Citta" class="control-label"></label>
-                <input asp-for="Citta" class="form-control" />
-                <span asp-validation-for="Citta" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Provincia" class="control-label"></label>
-                <input asp-for="Provincia" class="form-control" />
-                <span asp-validation-for="Provincia" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Telefono" class="control-label"></label>
-                <input asp-for="Telefono" class="form-control" />
-                <span asp-validation-for="Telefono" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Cellulare" class="control-label"></label>
-                <input asp-for="Cellulare" class="form-control" />
-                <span asp-validation-for="Cellulare" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
-@section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+<style>
+    .card {
+        transition: transform 0.3s, box-shadow 0.3s;
     }
-}
+
+        .card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+        }
+
+    .form-label {
+        font-weight: bold;
+    }
+
+    .text-center {
+        text-align: center;
+    }
+</style>

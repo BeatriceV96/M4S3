@@ -1,34 +1,23 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using Weeklyapp.Services;
+using Weeklyapp.Models;
 using Weeklyapp.DataLayer.Entities;
-using Weeklyapp.DataLayer.Services.Interfaces;
 
 namespace Weeklyapp.Controllers
 {
-    [Authorize]
     public class ServiziAggiuntiviController : Controller
     {
-        private readonly IServizioAggiuntivoService _servizioAggiuntivoService;
+        private readonly ServizioAggiuntivoService servizioAggiuntivoService;
 
-        public ServiziAggiuntiviController(IServizioAggiuntivoService servizioAggiuntivoService)
+        public ServiziAggiuntiviController(ServizioAggiuntivoService servizioAggiuntivoService)
         {
-            _servizioAggiuntivoService = servizioAggiuntivoService;
+            this.servizioAggiuntivoService = servizioAggiuntivoService;
         }
 
         public IActionResult Index()
         {
-            var serviziAggiuntivi = _servizioAggiuntivoService.ReadAll();
-            return View(serviziAggiuntivi);
-        }
-
-        public IActionResult Details(int id)
-        {
-            var servizioAggiuntivo = _servizioAggiuntivoService.Read(id);
-            if (servizioAggiuntivo == null)
-            {
-                return NotFound();
-            }
-            return View(servizioAggiuntivo);
+            var servizi = servizioAggiuntivoService.GetAll();
+            return View(servizi);
         }
 
         public IActionResult Create()
@@ -37,58 +26,14 @@ namespace Weeklyapp.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(ServizioAggiuntivo servizioAggiuntivo)
+        public IActionResult Create(ServizioAggiuntivoEntity servizio)
         {
             if (ModelState.IsValid)
             {
-                _servizioAggiuntivoService.Create(servizioAggiuntivo);
-                return RedirectToAction(nameof(Index));
+                servizioAggiuntivoService.Create(servizio);
+                return RedirectToAction("Index");
             }
-            return View(servizioAggiuntivo);
-        }
-
-        public IActionResult Edit(int id)
-        {
-            var servizioAggiuntivo = _servizioAggiuntivoService.Read(id);
-            if (servizioAggiuntivo == null)
-            {
-                return NotFound();
-            }
-            return View(servizioAggiuntivo);
-        }
-
-        [HttpPost]
-        public IActionResult Edit(int id, ServizioAggiuntivo servizioAggiuntivo)
-        {
-            if (id != servizioAggiuntivo.Id)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                _servizioAggiuntivoService.Update(servizioAggiuntivo);
-                return RedirectToAction(nameof(Index));
-            }
-            return View(servizioAggiuntivo);
-        }
-
-        public IActionResult Delete(int id)
-        {
-            var servizioAggiuntivo = _servizioAggiuntivoService.Read(id);
-            if (servizioAggiuntivo == null)
-            {
-                return NotFound();
-            }
-
-            return View(servizioAggiuntivo);
-        }
-
-        [HttpPost, ActionName("Delete")]
-        public IActionResult DeleteConfirmed(int id)
-        {
-            _servizioAggiuntivoService.Delete(id);
-            return RedirectToAction(nameof(Index));
+            return View(servizio);
         }
     }
 }

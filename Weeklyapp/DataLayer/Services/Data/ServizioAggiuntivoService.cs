@@ -1,49 +1,26 @@
-﻿using Weeklyapp.DataLayer.Entities;
-using Weeklyapp.DataLayer.Services.Interfaces;
+﻿using Weeklyapp.DAO;
+using Weeklyapp.DataLayer.Entities;
 using System.Collections.Generic;
-using System.Linq;
 
-namespace Weeklyapp.DataLayer.Services.Data
+namespace Weeklyapp.Services
 {
-    public class ServizioAggiuntivoService : IServizioAggiuntivoService
+    public class ServizioAggiuntivoService
     {
-        private readonly List<ServizioAggiuntivo> _serviziAggiuntivi = new List<ServizioAggiuntivo>();
+        private readonly ServizioAggiuntivoDao servizioAggiuntivoDao;
 
-        public void Create(ServizioAggiuntivo servizioAggiuntivo)
+        public ServizioAggiuntivoService(ServizioAggiuntivoDao servizioAggiuntivoDao)
         {
-            _serviziAggiuntivi.Add(servizioAggiuntivo);
+            this.servizioAggiuntivoDao = servizioAggiuntivoDao;
         }
 
-        public void Delete(int id)
+        public IEnumerable<ServizioAggiuntivoEntity> GetAll()
         {
-            var servizioAggiuntivo = _serviziAggiuntivi.FirstOrDefault(s => s.Id == id);
-            if (servizioAggiuntivo != null)
-            {
-                _serviziAggiuntivi.Remove(servizioAggiuntivo);
-            }
+            return servizioAggiuntivoDao.GetAll();
         }
 
-        public ServizioAggiuntivo Read(int id)
+        public void Create(ServizioAggiuntivoEntity servizio)
         {
-            return _serviziAggiuntivi.FirstOrDefault(s => s.Id == id);
-        }
-
-        public void Update(ServizioAggiuntivo servizioAggiuntivo)
-        {
-            var existingServizioAggiuntivo = _serviziAggiuntivi.FirstOrDefault(s => s.Id == servizioAggiuntivo.Id);
-            if (existingServizioAggiuntivo != null)
-            {
-                existingServizioAggiuntivo.IdPrenotazione = servizioAggiuntivo.IdPrenotazione;
-                existingServizioAggiuntivo.DataServizio = servizioAggiuntivo.DataServizio;
-                existingServizioAggiuntivo.Descrizione = servizioAggiuntivo.Descrizione;
-                existingServizioAggiuntivo.Quantita = servizioAggiuntivo.Quantita;
-                existingServizioAggiuntivo.Prezzo = servizioAggiuntivo.Prezzo;
-            }
-        }
-
-        public List<ServizioAggiuntivo> ReadAll()
-        {
-            return _serviziAggiuntivi;
+            servizioAggiuntivoDao.Create(servizio);
         }
     }
 }

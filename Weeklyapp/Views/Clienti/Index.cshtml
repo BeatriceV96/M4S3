@@ -1,78 +1,82 @@
-﻿@model IEnumerable<Weeklyapp.DataLayer.Entities.Cliente>
+﻿@model IEnumerable<Weeklyapp.DataLayer.Entities.ClienteEntity>
 
 @{
     ViewData["Title"] = "Clienti";
 }
 
-<h2>Clienti</h2>
+<div class="container mt-4">
+    <div class="text-center mb-4">
+        <h2>Elenco e Creazione/Modifica Clienti</h2>
+    </div>
+    <div class="mb-3 text-right">
+        <a class="btn btn-primary" asp-action="Create">Crea</a>
+    </div>
 
-<p>
-    <a asp-action="Create" class="btn btn-primary">Crea Nuovo Cliente</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.CodiceFiscale)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Cognome)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Nome)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Citta)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Provincia)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Telefono)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Cellulare)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CodiceFiscale)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Cognome)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Nome)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Citta)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Provincia)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Email)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Telefono)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Cellulare)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.CodiceFiscale" class="btn btn-warning">Modifica</a> |
-                    <a asp-action="Details" asp-route-id="@item.CodiceFiscale" class="btn btn-info">Dettagli</a> |
-                    <a asp-action="Delete" asp-route-id="@item.CodiceFiscale" class="btn btn-danger">Elimina</a>
-                </td>
-            </tr>
+    <div class="row">
+        <div class="col-md-12 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h3 class="card-title">Elenco Clienti</h3>
+                    <table class="table table-hover">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>Codice Fiscale</th>
+                                <th>Cognome</th>
+                                <th>Nome</th>
+                                <th>Città</th>
+                                <th>Provincia</th>
+                                <th>Email</th>
+                                <th>Telefono</th>
+                                <th>Cellulare</th>
+                                <th>Azioni</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var cliente in Model)
+                            {
+                                <tr>
+                                    <td>@cliente.CodiceFiscale</td>
+                                    <td>@cliente.Cognome</td>
+                                    <td>@cliente.Nome</td>
+                                    <td>@cliente.Citta</td>
+                                    <td>@cliente.Provincia</td>
+                                    <td>@cliente.Email</td>
+                                    <td>@cliente.Telefono</td>
+                                    <td>@cliente.Cellulare</td>
+                                    <td>
+                                        <a class="btn btn-warning" asp-action="Edit" asp-route-id="@cliente.CodiceFiscale">Modifica</a>
+                                        <a class="btn btn-danger" asp-action="Delete" asp-route-id="@cliente.CodiceFiscale">Elimina</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<style>
+    .card {
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+        .card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
         }
-    </tbody>
-</table>
+
+    .form-group label {
+        font-weight: bold;
+    }
+
+    .text-center {
+        text-align: center;
+    }
+
+    .btn {
+        margin-right: 5px;
+    }
+</style>

@@ -1,0 +1,77 @@
+﻿@model Weeklyapp.DataLayer.Entities.PrenotazioneEntity
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h3 class="card-title text-center">Crea Prenotazione</h3>
+                    <form asp-action="Create">
+                        <div class="form-group">
+                            <label asp-for="CodiceFiscaleCliente" class="form-label"></label>
+                            <input asp-for="CodiceFiscaleCliente" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="NumeroCamera" class="form-label"></label>
+                            <input asp-for="NumeroCamera" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="DataPrenotazione" class="form-label"></label>
+                            <input asp-for="DataPrenotazione" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="NumeroProgressivoAnno" class="form-label"></label>
+                            <input asp-for="NumeroProgressivoAnno" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Anno" class="form-label"></label>
+                            <input asp-for="Anno" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="PeriodoDal" class="form-label"></label>
+                            <input asp-for="PeriodoDal" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="PeriodoAl" class="form-label"></label>
+                            <input asp-for="PeriodoAl" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="CaparraConfirmatoria" class="form-label"></label>
+                            <input asp-for="CaparraConfirmatoria" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Tariffa" class="form-label"></label>
+                            <input asp-for="Tariffa" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Dettagli" class="form-label"></label>
+                            <input asp-for="Dettagli" class="form-control" />
+                        </div>
+                        <div class="text-center">
+                            <input type="submit" value="Crea" class="btn btn-primary mt-3" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .card {
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+        .card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+        }
+
+    .form-label {
+        font-weight: bold;
+    }
+
+    .text-center {
+        text-align: center;
+    }
+</style>

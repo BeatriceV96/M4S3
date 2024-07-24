@@ -1,9 +1,9 @@
 ﻿namespace Weeklyapp.DataLayer.Entities
 {
-    public class ServizioAggiuntivo
+    public class ServizioAggiuntivoEntity
     {
-        public int Id { get; set; }
-        public int IdPrenotazione { get; set; }
+        public int ID { get; set; }
+        public int IDPrenotazione { get; set; }
         public DateTime DataServizio { get; set; }
         public string Descrizione { get; set; }
         public int Quantita { get; set; }

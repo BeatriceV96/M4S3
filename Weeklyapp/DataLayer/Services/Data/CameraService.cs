@@ -1,46 +1,27 @@
-﻿using Weeklyapp.DataLayer.Entities;
-using Weeklyapp.DataLayer.Services.Interfaces;
+﻿using Weeklyapp.DAO;
+using Weeklyapp.DataLayer.Entities;
 using System.Collections.Generic;
-using System.Linq;
+using Weeklyapp.Models;
 
-namespace Weeklyapp.DataLayer.Services.Data
+namespace Weeklyapp.Services
 {
-    public class CameraService : ICameraService
+    public class CameraService
     {
-        private readonly List<Camera> _camere = new List<Camera>();
+        private readonly CameraDao cameraDao;
 
-        public void Create(Camera camera)
+        public CameraService(CameraDao cameraDao)
         {
-            _camere.Add(camera);
+            this.cameraDao = cameraDao;
         }
 
-        public void Delete(int numero)
+        public IEnumerable<CameraEntity> GetAll()
         {
-            var camera = _camere.FirstOrDefault(c => c.Numero == numero);
-            if (camera != null)
-            {
-                _camere.Remove(camera);
-            }
+            return cameraDao.GetAll();
         }
 
-        public Camera Read(int numero)
+        public void Create(CameraEntity camera)
         {
-            return _camere.FirstOrDefault(c => c.Numero == numero);
-        }
-
-        public void Update(Camera camera)
-        {
-            var existingCamera = _camere.FirstOrDefault(c => c.Numero == camera.Numero);
-            if (existingCamera != null)
-            {
-                existingCamera.Descrizione = camera.Descrizione;
-                existingCamera.Tipologia = camera.Tipologia;
-            }
-        }
-
-        public List<Camera> ReadAll()
-        {
-            return _camere;
+            cameraDao.Create(camera);
         }
     }
 }

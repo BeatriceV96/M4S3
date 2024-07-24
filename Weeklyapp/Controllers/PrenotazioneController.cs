@@ -1,34 +1,23 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using Weeklyapp.Services;
+using Weeklyapp.Models;
 using Weeklyapp.DataLayer.Entities;
-using Weeklyapp.DataLayer.Services.Interfaces;
 
 namespace Weeklyapp.Controllers
 {
-    [Authorize]
     public class PrenotazioniController : Controller
     {
-        private readonly IPrenotazioneService _prenotazioneService;
+        private readonly PrenotazioneService prenotazioneService;
 
-        public PrenotazioniController(IPrenotazioneService prenotazioneService)
+        public PrenotazioniController(PrenotazioneService prenotazioneService)
         {
-            _prenotazioneService = prenotazioneService;
+            this.prenotazioneService = prenotazioneService;
         }
 
         public IActionResult Index()
         {
-            var prenotazioni = _prenotazioneService.ReadAll();
+            var prenotazioni = prenotazioneService.GetAll();
             return View(prenotazioni);
-        }
-
-        public IActionResult Details(int id)
-        {
-            var prenotazione = _prenotazioneService.Read(id);
-            if (prenotazione == null)
-            {
-                return NotFound();
-            }
-            return View(prenotazione);
         }
 
         public IActionResult Create()
@@ -37,58 +26,14 @@ namespace Weeklyapp.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(Prenotazione prenotazione)
+        public IActionResult Create(PrenotazioneEntity prenotazione)
         {
             if (ModelState.IsValid)
             {
-                _prenotazioneService.Create(prenotazione);
-                return RedirectToAction(nameof(Index));
+                prenotazioneService.Create(prenotazione);
+                return RedirectToAction("Index");
             }
             return View(prenotazione);
-        }
-
-        public IActionResult Edit(int id)
-        {
-            var prenotazione = _prenotazioneService.Read(id);
-            if (prenotazione == null)
-            {
-                return NotFound();
-            }
-            return View(prenotazione);
-        }
-
-        [HttpPost]
-        public IActionResult Edit(int id, Prenotazione prenotazione)
-        {
-            if (id != prenotazione.Id)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                _prenotazioneService.Update(prenotazione);
-                return RedirectToAction(nameof(Index));
-            }
-            return View(prenotazione);
-        }
-
-        public IActionResult Delete(int id)
-        {
-            var prenotazione = _prenotazioneService.Read(id);
-            if (prenotazione == null)
-            {
-                return NotFound();
-            }
-
-            return View(prenotazione);
-        }
-
-        [HttpPost, ActionName("Delete")]
-        public IActionResult DeleteConfirmed(int id)
-        {
-            _prenotazioneService.Delete(id);
-            return RedirectToAction(nameof(Index));
         }
     }
 }

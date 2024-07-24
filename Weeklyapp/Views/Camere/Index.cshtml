@@ -1,0 +1,71 @@
+﻿@model IEnumerable<Weeklyapp.DataLayer.Entities.CameraEntity>
+
+@{
+    ViewData["Title"] = "Camere";
+}
+
+<div class="container mt-4">
+    <div class="text-center mb-4">
+        <h2>Elenco e Creazione/Modifica Camere</h2>
+    </div>
+    <div class="mb-3 text-right">
+        <a class="btn btn-primary" asp-action="Create">Crea</a>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h3 class="card-title">Elenco Camere</h3>
+                    <table class="table table-hover">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>Numero</th>
+                                <th>Descrizione</th>
+                                <th>Tipologia</th>
+                                <th>Azioni</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var camera in Model)
+                            {
+                                <tr>
+                                    <td>@camera.Numero</td>
+                                    <td>@camera.Descrizione</td>
+                                    <td>@camera.Tipologia</td>
+                                    <td>
+                                        <a class="btn btn-warning" asp-action="Edit" asp-route-id="@camera.Numero">Modifica</a>
+                                        <a class="btn btn-danger" asp-action="Delete" asp-route-id="@camera.Numero">Elimina</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .card {
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .card:hover {
+        transform: scale(1.02);
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .form-group label {
+        font-weight: bold;
+    }
+
+    .text-center {
+        text-align: center;
+    }
+
+    .btn {
+        margin-right: 5px;
+    }
+</style>

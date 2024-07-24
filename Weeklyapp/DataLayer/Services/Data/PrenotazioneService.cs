@@ -1,54 +1,26 @@
-﻿using Weeklyapp.DataLayer.Entities;
-using Weeklyapp.DataLayer.Services.Interfaces;
+﻿using Weeklyapp.DAO;
+using Weeklyapp.DataLayer.Entities;
 using System.Collections.Generic;
-using System.Linq;
 
-namespace Weeklyapp.DataLayer.Services.Data
+namespace Weeklyapp.Services
 {
-    public class PrenotazioneService : IPrenotazioneService
+    public class PrenotazioneService
     {
-        private readonly List<Prenotazione> _prenotazioni = new List<Prenotazione>();
+        private readonly PrenotazioneDao prenotazioneDao;
 
-        public void Create(Prenotazione prenotazione)
+        public PrenotazioneService(PrenotazioneDao prenotazioneDao)
         {
-            _prenotazioni.Add(prenotazione);
+            this.prenotazioneDao = prenotazioneDao;
         }
 
-        public void Delete(int id)
+        public IEnumerable<PrenotazioneEntity> GetAll()
         {
-            var prenotazione = _prenotazioni.FirstOrDefault(p => p.Id == id);
-            if (prenotazione != null)
-            {
-                _prenotazioni.Remove(prenotazione);
-            }
+            return prenotazioneDao.GetAll();
         }
 
-        public Prenotazione Read(int id)
+        public void Create(PrenotazioneEntity prenotazione)
         {
-            return _prenotazioni.FirstOrDefault(p => p.Id == id);
-        }
-
-        public void Update(Prenotazione prenotazione)
-        {
-            var existingPrenotazione = _prenotazioni.FirstOrDefault(p => p.Id == prenotazione.Id);
-            if (existingPrenotazione != null)
-            {
-                existingPrenotazione.CodiceFiscaleCliente = prenotazione.CodiceFiscaleCliente;
-                existingPrenotazione.NumeroCamera = prenotazione.NumeroCamera;
-                existingPrenotazione.DataPrenotazione = prenotazione.DataPrenotazione;
-                existingPrenotazione.NumeroProgressivoAnno = prenotazione.NumeroProgressivoAnno;
-                existingPrenotazione.Anno = prenotazione.Anno;
-                existingPrenotazione.PeriodoDal = prenotazione.PeriodoDal;
-                existingPrenotazione.PeriodoAl = prenotazione.PeriodoAl;
-                existingPrenotazione.CaparraConfirmatoria = prenotazione.CaparraConfirmatoria;
-                existingPrenotazione.Tariffa = prenotazione.Tariffa;
-                existingPrenotazione.Dettagli = prenotazione.Dettagli;
-            }
-        }
-
-        public List<Prenotazione> ReadAll()
-        {
-            return _prenotazioni;
+            prenotazioneDao.Create(prenotazione);
         }
     }
 }
