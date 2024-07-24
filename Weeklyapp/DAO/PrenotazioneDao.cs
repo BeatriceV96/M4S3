@@ -165,5 +165,77 @@ namespace Weeklyapp.DAO
                 throw;
             }
         }
+
+        public CheckoutDetails GetCheckoutDetails(int prenotazioneId)
+        {
+            var checkoutDetails = new CheckoutDetails();
+
+            try
+            {
+                using var conn = new SqlConnection(connectionString);
+                conn.Open();
+
+                // Recupera i dettagli della prenotazione
+                using (var cmd = new SqlCommand("SELECT * FROM Prenotazioni WHERE ID = @ID", conn))
+                {
+                    cmd.Parameters.AddWithValue("@ID", prenotazioneId);
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            checkoutDetails.Prenotazione = new PrenotazioneEntity
+                            {
+                                ID = reader.GetInt32(0),
+                                CodiceFiscaleCliente = reader.GetString(1),
+                                NumeroCamera = reader.GetInt32(2),
+                                DataPrenotazione = reader.GetDateTime(3),
+                                NumeroProgressivoAnno = reader.GetInt32(4),
+                                Anno = reader.GetInt32(5),
+                                PeriodoDal = reader.GetDateTime(6),
+                                PeriodoAl = reader.GetDateTime(7),
+                                CaparraConfirmatoria = reader.GetDecimal(8),
+                                Tariffa = reader.GetDecimal(9),
+                                Dettagli = reader.GetString(10)
+                            };
+                        }
+                    }
+                }
+
+                // Recupera i servizi aggiuntivi
+                var serviziAggiuntivi = new List<ServizioAggiuntivoEntity>();
+                using (var cmd = new SqlCommand("SELECT * FROM ServiziAggiuntivi WHERE IDPrenotazione = @IDPrenotazione", conn))
+                {
+                    cmd.Parameters.AddWithValue("@IDPrenotazione", prenotazioneId);
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            var servizio = new ServizioAggiuntivoEntity
+                            {
+                                ID = reader.GetInt32(0),
+                                IDPrenotazione = reader.GetInt32(1),
+                                DataServizio = reader.GetDateTime(2),
+                                Descrizione = reader.GetString(3),
+                                Quantita = reader.GetInt32(4),
+                                Prezzo = reader.GetDecimal(5)
+                            };
+                            serviziAggiuntivi.Add(servizio);
+                        }
+                    }
+                }
+                checkoutDetails.ServiziAggiuntivi = serviziAggiuntivi;
+
+                // Calcola l'importo da saldare
+                var totaleServiziAggiuntivi = serviziAggiuntivi.Sum(s => s.Prezzo * s.Quantita);
+                checkoutDetails.ImportoDaSaldare = checkoutDetails.Prenotazione.Tariffa - checkoutDetails.Prenotazione.CaparraConfirmatoria + totaleServiziAggiuntivi;
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "An error occurred while getting the checkout details");
+                throw;
+            }
+
+            return checkoutDetails;
+        }
     }
 }

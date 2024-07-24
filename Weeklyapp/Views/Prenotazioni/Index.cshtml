@@ -7,9 +7,9 @@
 <h2>Lista Prenotazioni</h2>
 
 <p>
-    <a asp-action="Create" class="btn btn-primary">Crea Nuova Prenotazione</a>
+    <a asp-action="Create" class="btn btn-primary mb-3">Crea Nuova Prenotazione</a>
 </p>
-<table class="table">
+<table class="table table-striped">
     <thead>
         <tr>
             <th>ID</th>
@@ -23,7 +23,7 @@
             <th>Caparra Confirmatoria</th>
             <th>Tariffa</th>
             <th>Dettagli</th>
-            <th></th>
+            <th>Azioni</th>
         </tr>
     </thead>
     <tbody>
@@ -42,10 +42,19 @@
                 <td>@item.Tariffa</td>
                 <td>@item.Dettagli</td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.ID" class="btn btn-warning">Modifica</a> |
-                    <a asp-action="Delete" asp-route-id="@item.ID" class="btn btn-danger">Elimina</a>
+                    <div class="btn-group" role="group">
+                        <a asp-action="Edit" asp-route-id="@item.ID" class="btn btn-warning btn-sm">Modifica</a>
+                        <a asp-action="Delete" asp-route-id="@item.ID" class="btn btn-danger btn-sm">Elimina</a>
+                        <a asp-controller="Checkout" asp-action="Details" asp-route-id="@item.ID" class="btn btn-info btn-sm">Checkout</a>
+                    </div>
                 </td>
             </tr>
         }
     </tbody>
 </table>
+
+<style>
+    .btn-group .btn {
+        min-width: 80px;
+    }
+</style>

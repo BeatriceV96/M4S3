@@ -18,6 +18,7 @@ builder.Services.AddScoped<CameraService>();
 builder.Services.AddScoped<PrenotazioneService>();
 builder.Services.AddScoped<ServizioAggiuntivoService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<CheckoutService>();
 
 // Aggiungi servizi al container
 builder.Services.AddControllersWithViews();
