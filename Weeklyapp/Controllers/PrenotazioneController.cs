@@ -77,5 +77,16 @@ namespace Weeklyapp.Controllers
             prenotazioneService.Delete(id);
             return RedirectToAction("Index");
         }
+
+        public IActionResult Search()
+        {
+            return View();
+        }
+
+        public IActionResult SearchResults(string codiceFiscale)
+        {
+            var prenotazioni = prenotazioneService.GetByCodiceFiscale(codiceFiscale);
+            return View(prenotazioni);
+        }
     }
 }

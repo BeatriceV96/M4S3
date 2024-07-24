@@ -37,5 +37,15 @@ namespace Weeklyapp.Services
         {
             prenotazioneDao.Delete(id);
         }
+
+        public IEnumerable<PrenotazioneEntity> GetByCodiceFiscale(string codiceFiscale)
+        {
+            return prenotazioneDao.GetByCodiceFiscale(codiceFiscale);
+        }
+
+        public int GetTotalPrenotazioniPensioneCompleta()
+        {
+            return prenotazioneDao.GetTotalPrenotazioniPensioneCompleta();
+        }
     }
 }

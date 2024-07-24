@@ -1,0 +1,85 @@
+﻿@model IEnumerable<Weeklyapp.DataLayer.Entities.PrenotazioneEntity>
+
+@{
+    ViewData["Title"] = "Risultati della Ricerca";
+}
+
+<h2>Risultati della Ricerca</h2>
+
+@if (Model.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Codice Fiscale Cliente</th>
+                <th>Numero Camera</th>
+                <th>Data Prenotazione</th>
+                <th>Numero Progressivo Anno</th>
+                <th>Anno</th>
+                <th>Periodo Dal</th>
+                <th>Periodo Al</th>
+                <th>Caparra Confirmatoria</th>
+                <th>Tariffa</th>
+                <th>Dettagli</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.ID</td>
+                    <td>@item.CodiceFiscaleCliente</td>
+                    <td>@item.NumeroCamera</td>
+                    <td>@item.DataPrenotazione.ToString("yyyy-MM-dd")</td>
+                    <td>@item.NumeroProgressivoAnno</td>
+                    <td>@item.Anno</td>
+                    <td>@item.PeriodoDal.ToString("yyyy-MM-dd")</td>
+                    <td>@item.PeriodoAl.ToString("yyyy-MM-dd")</td>
+                    <td>@item.CaparraConfirmatoria</td>
+                    <td>@item.Tariffa</td>
+                    <td>@item.Dettagli</td>
+                    <td>
+                        <div class="btn-group" role="group">
+                            <a asp-action="Edit" asp-route-id="@item.ID" class="btn btn-warning w-100">Modifica</a>
+                            <a asp-action="Delete" asp-route-id="@item.ID" class="btn btn-danger w-100">Elimina</a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>Nessuna prenotazione trovata per il codice fiscale inserito.</p>
+}
+
+<style>
+    .btn-group .btn {
+        width: 100%;
+        margin-right: 5px;
+    }
+
+        .btn-group .btn:last-child {
+            margin-right: 0;
+        }
+
+    .btn-warning {
+        background-color: #ffc107;
+        border-color: #ffc107;
+        color: #fff;
+    }
+
+    .btn-danger {
+        background-color: #dc3545;
+        border-color: #dc3545;
+        color: #fff;
+    }
+
+    .btn:hover {
+        color: #fff;
+        text-decoration: none;
+    }
+</style>

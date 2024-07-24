@@ -13,6 +13,8 @@ namespace Weeklyapp.DAO
         private const string INSERT_PRENOTAZIONE = "INSERT INTO Prenotazioni (CodiceFiscaleCliente, NumeroCamera, DataPrenotazione, NumeroProgressivoAnno, Anno, PeriodoDal, PeriodoAl, CaparraConfirmatoria, Tariffa, Dettagli) VALUES (@CodiceFiscaleCliente, @NumeroCamera, @DataPrenotazione, @NumeroProgressivoAnno, @Anno, @PeriodoDal, @PeriodoAl, @CaparraConfirmatoria, @Tariffa, @Dettagli)";
         private const string UPDATE_PRENOTAZIONE = "UPDATE Prenotazioni SET CodiceFiscaleCliente = @CodiceFiscaleCliente, NumeroCamera = @NumeroCamera, DataPrenotazione = @DataPrenotazione, NumeroProgressivoAnno = @NumeroProgressivoAnno, Anno = @Anno, PeriodoDal = @PeriodoDal, PeriodoAl = @PeriodoAl, CaparraConfirmatoria = @CaparraConfirmatoria, Tariffa = @Tariffa, Dettagli = @Dettagli WHERE ID = @ID";
         private const string DELETE_PRENOTAZIONE = "DELETE FROM Prenotazioni WHERE ID = @ID";
+        private const string SELECT_PRENOTAZIONI_BY_CODICE_FISCALE = "SELECT * FROM Prenotazioni WHERE CodiceFiscaleCliente = @CodiceFiscaleCliente";
+        private const string SELECT_TOTAL_PRENOTAZIONI_PENSIONE_COMPLETA = "SELECT COUNT(*) FROM Prenotazioni WHERE Dettagli = 'pensione completa'";
 
         public PrenotazioneDao(IConfiguration configuration, ILogger<PrenotazioneDao> logger) : base(configuration, logger) { }
 
@@ -236,6 +238,66 @@ namespace Weeklyapp.DAO
             }
 
             return checkoutDetails;
+        }
+
+        public IEnumerable<PrenotazioneEntity> GetByCodiceFiscale(string codiceFiscale)
+        {
+            var result = new List<PrenotazioneEntity>();
+            try
+            {
+                using var conn = new SqlConnection(connectionString);
+                conn.Open();
+                using (var cmd = new SqlCommand(SELECT_PRENOTAZIONI_BY_CODICE_FISCALE, conn))
+                {
+                    cmd.Parameters.AddWithValue("@CodiceFiscaleCliente", codiceFiscale);
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            var prenotazione = new PrenotazioneEntity
+                            {
+                                ID = reader.GetInt32(0),
+                                CodiceFiscaleCliente = reader.GetString(1),
+                                NumeroCamera = reader.GetInt32(2),
+                                DataPrenotazione = reader.GetDateTime(3),
+                                NumeroProgressivoAnno = reader.GetInt32(4),
+                                Anno = reader.GetInt32(5),
+                                PeriodoDal = reader.GetDateTime(6),
+                                PeriodoAl = reader.GetDateTime(7),
+                                CaparraConfirmatoria = reader.GetDecimal(8),
+                                Tariffa = reader.GetDecimal(9),
+                                Dettagli = reader.GetString(10)
+                            };
+                            result.Add(prenotazione);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "An error occurred while getting the prenotazioni by codice fiscale");
+                throw;
+            }
+            return result;
+        }
+
+
+        public int GetTotalPrenotazioniPensioneCompleta()
+        {
+            try
+            {
+                using var conn = new SqlConnection(connectionString);
+                conn.Open();
+                using (var cmd = new SqlCommand(SELECT_TOTAL_PRENOTAZIONI_PENSIONE_COMPLETA, conn))
+                {
+                    return (int)cmd.ExecuteScalar();
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "An error occurred while getting the total prenotazioni for pensione completa");
+                throw;
+            }
         }
     }
 }
