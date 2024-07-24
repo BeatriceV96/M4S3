@@ -299,5 +299,47 @@ namespace Weeklyapp.DAO
                 throw;
             }
         }
+
+        public IEnumerable<PrenotazioneEntity> GetLatest(int count)
+        {
+            var result = new List<PrenotazioneEntity>();
+            try
+            {
+                using var conn = new SqlConnection(connectionString);
+                conn.Open();
+                using (var cmd = new SqlCommand($"SELECT TOP {count} * FROM Prenotazioni ORDER BY DataPrenotazione DESC", conn))
+                {
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            var prenotazione = new PrenotazioneEntity
+                            {
+                                ID = reader.GetInt32(0),
+                                CodiceFiscaleCliente = reader.GetString(1),
+                                NumeroCamera = reader.GetInt32(2),
+                                DataPrenotazione = reader.GetDateTime(3),
+                                NumeroProgressivoAnno = reader.GetInt32(4),
+                                Anno = reader.GetInt32(5),
+                                PeriodoDal = reader.GetDateTime(6),
+                                PeriodoAl = reader.GetDateTime(7),
+                                CaparraConfirmatoria = reader.GetDecimal(8),
+                                Tariffa = reader.GetDecimal(9),
+                                Dettagli = reader.GetString(10)
+                            };
+                            result.Add(prenotazione);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "An error occurred while getting the latest prenotazioni");
+                throw;
+            }
+            return result;
+        }
+
+
     }
 }

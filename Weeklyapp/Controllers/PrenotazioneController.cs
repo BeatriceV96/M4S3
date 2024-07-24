@@ -88,5 +88,12 @@ namespace Weeklyapp.Controllers
             var prenotazioni = prenotazioneService.GetByCodiceFiscale(codiceFiscale);
             return View(prenotazioni);
         }
+
+        [HttpGet]
+        public IActionResult GetLatestPrenotazioni(int count)
+        {
+            var latestPrenotazioni = prenotazioneService.GetLatest(count);
+            return PartialView("_LatestPrenotazioniPartial", latestPrenotazioni);
+        }
     }
 }

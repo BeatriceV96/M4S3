@@ -1,0 +1,37 @@
+﻿@model IEnumerable<Weeklyapp.DataLayer.Entities.PrenotazioneEntity>
+
+<div class="latest-prenotazioni">
+    <h3>Ultime Prenotazioni</h3>
+    <ul>
+        @foreach (var prenotazione in Model)
+        {
+            <li>
+                <strong>ID:</strong> @prenotazione.ID <br />
+                <strong>Cliente:</strong> @prenotazione.CodiceFiscaleCliente <br />
+                <strong>Camera:</strong> @prenotazione.NumeroCamera <br />
+                <strong>Data Prenotazione:</strong> @prenotazione.DataPrenotazione.ToString("yyyy-MM-dd") <br />
+                <strong>Periodo:</strong> @prenotazione.PeriodoDal.ToString("yyyy-MM-dd") - @prenotazione.PeriodoAl.ToString("yyyy-MM-dd") <br />
+                <strong>Tariffa:</strong> @prenotazione.Tariffa € <br />
+            </li>
+        }
+    </ul>
+</div>
+
+<style>
+    .latest-prenotazioni {
+        margin-top: 20px;
+    }
+
+        .latest-prenotazioni ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .latest-prenotazioni li {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 5px;
+        }
+</style>

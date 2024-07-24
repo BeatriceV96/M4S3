@@ -6,46 +6,51 @@ namespace Weeklyapp.Services
 {
     public class PrenotazioneService
     {
-        private readonly PrenotazioneDao prenotazioneDao;
+        private readonly PrenotazioneDao _prenotazioneDao;
 
         public PrenotazioneService(PrenotazioneDao prenotazioneDao)
         {
-            this.prenotazioneDao = prenotazioneDao;
+            _prenotazioneDao = prenotazioneDao;
         }
 
         public IEnumerable<PrenotazioneEntity> GetAll()
         {
-            return prenotazioneDao.GetAll();
+            return _prenotazioneDao.GetAll();
         }
 
         public PrenotazioneEntity Get(int id)
         {
-            return prenotazioneDao.Get(id);
+            return _prenotazioneDao.Get(id);
         }
 
         public void Create(PrenotazioneEntity prenotazione)
         {
-            prenotazioneDao.Create(prenotazione);
+            _prenotazioneDao.Create(prenotazione);
         }
 
         public void Edit(PrenotazioneEntity prenotazione)
         {
-            prenotazioneDao.Update(prenotazione);
+            _prenotazioneDao.Update(prenotazione);
         }
 
         public void Delete(int id)
         {
-            prenotazioneDao.Delete(id);
+            _prenotazioneDao.Delete(id);
         }
 
         public IEnumerable<PrenotazioneEntity> GetByCodiceFiscale(string codiceFiscale)
         {
-            return prenotazioneDao.GetByCodiceFiscale(codiceFiscale);
+            return _prenotazioneDao.GetByCodiceFiscale(codiceFiscale);
         }
 
         public int GetTotalPrenotazioniPensioneCompleta()
         {
-            return prenotazioneDao.GetTotalPrenotazioniPensioneCompleta();
+            return _prenotazioneDao.GetTotalPrenotazioniPensioneCompleta();
+        }
+
+        public IEnumerable<PrenotazioneEntity> GetLatest(int count)
+        {
+            return _prenotazioneDao.GetLatest(count);
         }
     }
 }

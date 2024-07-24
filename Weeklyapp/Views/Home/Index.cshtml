@@ -3,6 +3,69 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">Benvenuto in WeeklyApp</h1>
+    <p class="lead">Il software per la gestione delle prenotazioni di un hotel.</p>
+    <p>Di seguito troverai le ultime prenotazioni effettuate:</p>
 </div>
+
+<div id="latest-prenotazioni-container" class="container mt-4">
+    <!-- Il contenuto verrà caricato qui via AJAX -->
+</div>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Carica le ultime prenotazioni
+            $.ajax({
+                url: '@Url.Action("GetLatestPrenotazioni", "Home")',
+                type: 'GET',
+                success: function (data) {
+                    var container = $('#latest-prenotazioni-container');
+                    container.empty();
+
+                    var table = $('<table>').addClass('table table-striped table-bordered');
+                    var thead = $('<thead>').append(
+                        $('<tr>').append(
+                            $('<th>').text('ID'),
+                            $('<th>').text('Codice Fiscale Cliente'),
+                            $('<th>').text('Numero Camera'),
+                            $('<th>').text('Data Prenotazione'),
+                            $('<th>').text('Numero Progressivo Anno'),
+                            $('<th>').text('Anno'),
+                            $('<th>').text('Periodo Dal'),
+                            $('<th>').text('Periodo Al'),
+                            $('<th>').text('Caparra Confirmatoria'),
+                            $('<th>').text('Tariffa'),
+                            $('<th>').text('Dettagli')
+                        )
+                    );
+                    table.append(thead);
+
+                    var tbody = $('<tbody>');
+                    $.each(data, function (index, item) {
+                        var row = $('<tr>').append(
+                            $('<td>').text(item.id),
+                            $('<td>').text(item.codiceFiscaleCliente),
+                            $('<td>').text(item.numeroCamera),
+                            $('<td>').text(new Date(item.dataPrenotazione).toISOString().split('T')[0]),
+                            $('<td>').text(item.numeroProgressivoAnno),
+                            $('<td>').text(item.anno),
+                            $('<td>').text(new Date(item.periodoDal).toISOString().split('T')[0]),
+                            $('<td>').text(new Date(item.periodoAl).toISOString().split('T')[0]),
+                            $('<td>').text(item.caparraConfirmatoria),
+                            $('<td>').text(item.tariffa),
+                            $('<td>').text(item.dettagli)
+                        );
+                        tbody.append(row);
+                    });
+                    table.append(tbody);
+                    container.append(table);
+                },
+                error: function () {
+                    $('#latest-prenotazioni-container').html('<p>Impossibile caricare le prenotazioni.</p>');
+                }
+            });
+        });
+    </script>
+}
