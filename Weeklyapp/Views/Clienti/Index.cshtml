@@ -1,41 +1,76 @@
 ﻿@model IEnumerable<Weeklyapp.DataLayer.Entities.Cliente>
 
 @{
-    ViewData["Title"] = "Lista Clienti";
+    ViewData["Title"] = "Clienti";
 }
 
-<h2>Lista Clienti</h2>
+<h2>Clienti</h2>
 
+<p>
+    <a asp-action="Create" class="btn btn-primary">Crea Nuovo Cliente</a>
+</p>
 <table class="table">
     <thead>
         <tr>
-            <th>Codice Fiscale</th>
-            <th>Cognome</th>
-            <th>Nome</th>
-            <th>Città</th>
-            <th>Provincia</th>
-            <th>Email</th>
-            <th>Telefono</th>
-            <th>Cellulare</th>
+            <th>
+                @Html.DisplayNameFor(model => model.CodiceFiscale)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cognome)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nome)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Citta)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Provincia)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Telefono)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cellulare)
+            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var cliente in Model)
+        @foreach (var item in Model)
         {
             <tr>
-                <td>@cliente.CodiceFiscale</td>
-                <td>@cliente.Cognome</td>
-                <td>@cliente.Nome</td>
-                <td>@cliente.Citta</td>
-                <td>@cliente.Provincia</td>
-                <td>@cliente.Email</td>
-                <td>@cliente.Telefono</td>
-                <td>@cliente.Cellulare</td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@cliente.CodiceFiscale">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@cliente.CodiceFiscale">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@cliente.CodiceFiscale">Delete</a>
+                    @Html.DisplayFor(modelItem => item.CodiceFiscale)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Cognome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Citta)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Provincia)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Telefono)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Cellulare)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.CodiceFiscale" class="btn btn-warning">Modifica</a> |
+                    <a asp-action="Details" asp-route-id="@item.CodiceFiscale" class="btn btn-info">Dettagli</a> |
+                    <a asp-action="Delete" asp-route-id="@item.CodiceFiscale" class="btn btn-danger">Elimina</a>
                 </td>
             </tr>
         }

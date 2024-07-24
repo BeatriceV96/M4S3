@@ -1,32 +1,33 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Weeklyapp.DataLayer.Entities;
 using Weeklyapp.DataLayer.Services.Interfaces;
 using Weeklyapp.DataLayer.Services.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddScoped<ClienteService>();
+// Configura i servizi dell'applicazione
+builder.Services.AddScoped<IClienteService, ClienteService>();
+builder.Services.AddScoped<IPrenotazioneService, PrenotazioneService>();
+builder.Services.AddScoped<ICameraService, CameraService>();
+builder.Services.AddScoped<IServizioAggiuntivoService, ServizioAggiuntivoService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
-builder.Services.AddScoped<DbContext>();
 
-// Add services to the container.
+// Aggiungi servizi al container
 builder.Services.AddControllersWithViews();
-
-
 
 // Configura l'autenticazione
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
         options.LoginPath = "/Account/Login";
+        options.LogoutPath = "/Account/Logout";
     });
 
 var app = builder.Build();
-// Configure the HTTP request pipeline.
+
+// Configura il pipeline delle richieste HTTP
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 

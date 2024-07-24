@@ -8,9 +8,9 @@ namespace Weeklyapp.Controllers
     [Authorize]
     public class ClientiController : Controller
     {
-        private readonly IClienteDao _clienteService;
+        private readonly IClienteService _clienteService;
 
-        public ClientiController(IClienteDao clienteService)
+        public ClientiController(IClienteService clienteService)
         {
             _clienteService = clienteService;
         }
