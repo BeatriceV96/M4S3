@@ -4,19 +4,19 @@ using Weeklyapp.DataLayer.Entities;
 
 namespace Weeklyapp.Controllers
 {
-    public class PrenotazioniController : Controller
+    public class CamereController : Controller
     {
-        private readonly PrenotazioneService _prenotazioneService;
+        private readonly CameraService _cameraService;
 
-        public PrenotazioniController(PrenotazioneService prenotazioneService)
+        public CamereController(CameraService cameraService)
         {
-            _prenotazioneService = prenotazioneService;
+            _cameraService = cameraService;
         }
 
         public IActionResult Index()
         {
-            var prenotazioni = _prenotazioneService.GetAll();
-            return View(prenotazioni);
+            var camere = _cameraService.GetAll();
+            return View(camere);
         }
 
         public IActionResult Create()
@@ -25,57 +25,57 @@ namespace Weeklyapp.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(PrenotazioneEntity prenotazione)
+        public IActionResult Create(CameraEntity camera)
         {
             if (ModelState.IsValid)
             {
-                _prenotazioneService.Create(prenotazione);
+                _cameraService.Create(camera);
                 return RedirectToAction("Index");
             }
-            return View(prenotazione);
+            return View(camera);
         }
 
         public IActionResult Edit(int id)
         {
-            var prenotazione = _prenotazioneService.GetById(id);
-            if (prenotazione == null)
+            var camera = _cameraService.GetAll().FirstOrDefault(c => c.Numero == id);
+            if (camera == null)
             {
                 return NotFound();
             }
-            return View(prenotazione);
+            return View(camera);
         }
 
         [HttpPost]
-        public IActionResult Edit(int id, PrenotazioneEntity prenotazione)
+        public IActionResult Edit(int id, CameraEntity camera)
         {
-            if (id != prenotazione.ID)
+            if (id != camera.Numero)
             {
                 return NotFound();
             }
 
             if (ModelState.IsValid)
             {
-                _prenotazioneService.Update(prenotazione);
+                _cameraService.Update(camera);
                 return RedirectToAction("Index");
             }
-            return View(prenotazione);
+            return View(camera);
         }
 
         public IActionResult Delete(int id)
         {
-            var prenotazione = _prenotazioneService.GetById(id);
-            if (prenotazione == null)
+            var camera = _cameraService.GetAll().FirstOrDefault(c => c.Numero == id);
+            if (camera == null)
             {
                 return NotFound();
             }
 
-            return View(prenotazione);
+            return View(camera);
         }
 
         [HttpPost, ActionName("Delete")]
         public IActionResult DeleteConfirmed(int id)
         {
-            _prenotazioneService.Delete(id);
+            _cameraService.Delete(id);
             return RedirectToAction("Index");
         }
     }

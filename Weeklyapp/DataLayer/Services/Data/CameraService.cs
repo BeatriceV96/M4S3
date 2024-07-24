@@ -1,27 +1,36 @@
-﻿using Weeklyapp.DAO;
-using Weeklyapp.DataLayer.Entities;
+﻿using Weeklyapp.DataLayer.Entities;
+using Weeklyapp.DAO;
 using System.Collections.Generic;
-using Weeklyapp.Models;
 
 namespace Weeklyapp.Services
 {
     public class CameraService
     {
-        private readonly CameraDao cameraDao;
+        private readonly CameraDao _cameraDao;
 
         public CameraService(CameraDao cameraDao)
         {
-            this.cameraDao = cameraDao;
+            _cameraDao = cameraDao;
         }
 
         public IEnumerable<CameraEntity> GetAll()
         {
-            return cameraDao.GetAll();
+            return _cameraDao.GetAll();
         }
 
         public void Create(CameraEntity camera)
         {
-            cameraDao.Create(camera);
+            _cameraDao.Create(camera);
+        }
+
+        public void Update(CameraEntity camera)
+        {
+            _cameraDao.Update(camera);
+        }
+
+        public void Delete(int numero)
+        {
+            _cameraDao.Delete(numero);
         }
     }
 }

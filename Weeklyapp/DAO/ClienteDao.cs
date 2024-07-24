@@ -8,8 +8,8 @@ namespace Weeklyapp.DAO
 {
     public class ClienteDao : DaoBase
     {
-        private const string SELECT_ALL_CLIENTI = "SELECT CodiceFiscale, Cognome, Nome, Citta, Provincia, Email, Telefono, Cellulare FROM Clienti";
-        private const string SELECT_CLIENTE_BY_CF = "SELECT CodiceFiscale, Cognome, Nome, Citta, Provincia, Email, Telefono, Cellulare FROM Clienti WHERE CodiceFiscale = @CodiceFiscale";
+        private const string SELECT_ALL_CLIENTI = "SELECT * FROM Clienti";
+        private const string SELECT_CLIENTE_BY_ID = "SELECT * FROM Clienti WHERE CodiceFiscale = @CodiceFiscale";
         private const string INSERT_CLIENTE = "INSERT INTO Clienti (CodiceFiscale, Cognome, Nome, Citta, Provincia, Email, Telefono, Cellulare) VALUES (@CodiceFiscale, @Cognome, @Nome, @Citta, @Provincia, @Email, @Telefono, @Cellulare)";
         private const string UPDATE_CLIENTE = "UPDATE Clienti SET Cognome = @Cognome, Nome = @Nome, Citta = @Citta, Provincia = @Provincia, Email = @Email, Telefono = @Telefono, Cellulare = @Cellulare WHERE CodiceFiscale = @CodiceFiscale";
         private const string DELETE_CLIENTE = "DELETE FROM Clienti WHERE CodiceFiscale = @CodiceFiscale";
@@ -53,14 +53,37 @@ namespace Weeklyapp.DAO
             return result;
         }
 
-        public ClienteEntity GetByCodiceFiscale(string codiceFiscale)
+        public void Create(ClienteEntity cliente)
+        {
+            try
+            {
+                using var conn = new SqlConnection(connectionString);
+                conn.Open();
+                using var cmd = new SqlCommand(INSERT_CLIENTE, conn);
+                cmd.Parameters.AddWithValue("@CodiceFiscale", cliente.CodiceFiscale);
+                cmd.Parameters.AddWithValue("@Cognome", cliente.Cognome);
+                cmd.Parameters.AddWithValue("@Nome", cliente.Nome);
+                cmd.Parameters.AddWithValue("@Citta", cliente.Citta);
+                cmd.Parameters.AddWithValue("@Provincia", cliente.Provincia);
+                cmd.Parameters.AddWithValue("@Email", cliente.Email);
+                cmd.Parameters.AddWithValue("@Telefono", cliente.Telefono);
+                cmd.Parameters.AddWithValue("@Cellulare", cliente.Cellulare);
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "An error occurred while creating the client");
+                throw;
+            }
+        }
+        public ClienteEntity Get(string codiceFiscale)
         {
             ClienteEntity cliente = null;
             try
             {
                 using var conn = new SqlConnection(connectionString);
                 conn.Open();
-                using (var cmd = new SqlCommand(SELECT_CLIENTE_BY_CF, conn))
+                using (var cmd = new SqlCommand(SELECT_CLIENTE_BY_ID, conn))
                 {
                     cmd.Parameters.AddWithValue("@CodiceFiscale", codiceFiscale);
                     using (var reader = cmd.ExecuteReader())
@@ -84,56 +107,28 @@ namespace Weeklyapp.DAO
             }
             catch (Exception ex)
             {
-                logger.LogError(ex, "An error occurred while getting the client by codice fiscale");
+                logger.LogError(ex, "An error occurred while getting the client by CodiceFiscale");
                 throw;
             }
             return cliente;
         }
 
-        public void Create(ClienteEntity cliente)
+        public void Edit(ClienteEntity cliente)
         {
             try
             {
                 using var conn = new SqlConnection(connectionString);
                 conn.Open();
-                using (var cmd = new SqlCommand(INSERT_CLIENTE, conn))
-                {
-                    cmd.Parameters.AddWithValue("@CodiceFiscale", cliente.CodiceFiscale);
-                    cmd.Parameters.AddWithValue("@Cognome", cliente.Cognome);
-                    cmd.Parameters.AddWithValue("@Nome", cliente.Nome);
-                    cmd.Parameters.AddWithValue("@Citta", cliente.Citta);
-                    cmd.Parameters.AddWithValue("@Provincia", cliente.Provincia);
-                    cmd.Parameters.AddWithValue("@Email", cliente.Email);
-                    cmd.Parameters.AddWithValue("@Telefono", cliente.Telefono);
-                    cmd.Parameters.AddWithValue("@Cellulare", cliente.Cellulare);
-                    cmd.ExecuteNonQuery();
-                }
-            }
-            catch (Exception ex)
-            {
-                logger.LogError(ex, "An error occurred while creating the client");
-                throw;
-            }
-        }
-
-        public void Update(ClienteEntity cliente)
-        {
-            try
-            {
-                using var conn = new SqlConnection(connectionString);
-                conn.Open();
-                using (var cmd = new SqlCommand(UPDATE_CLIENTE, conn))
-                {
-                    cmd.Parameters.AddWithValue("@CodiceFiscale", cliente.CodiceFiscale);
-                    cmd.Parameters.AddWithValue("@Cognome", cliente.Cognome);
-                    cmd.Parameters.AddWithValue("@Nome", cliente.Nome);
-                    cmd.Parameters.AddWithValue("@Citta", cliente.Citta);
-                    cmd.Parameters.AddWithValue("@Provincia", cliente.Provincia);
-                    cmd.Parameters.AddWithValue("@Email", cliente.Email);
-                    cmd.Parameters.AddWithValue("@Telefono", cliente.Telefono);
-                    cmd.Parameters.AddWithValue("@Cellulare", cliente.Cellulare);
-                    cmd.ExecuteNonQuery();
-                }
+                using var cmd = new SqlCommand(UPDATE_CLIENTE, conn);
+                cmd.Parameters.AddWithValue("@CodiceFiscale", cliente.CodiceFiscale);
+                cmd.Parameters.AddWithValue("@Cognome", cliente.Cognome);
+                cmd.Parameters.AddWithValue("@Nome", cliente.Nome);
+                cmd.Parameters.AddWithValue("@Citta", cliente.Citta);
+                cmd.Parameters.AddWithValue("@Provincia", cliente.Provincia);
+                cmd.Parameters.AddWithValue("@Email", cliente.Email);
+                cmd.Parameters.AddWithValue("@Telefono", cliente.Telefono);
+                cmd.Parameters.AddWithValue("@Cellulare", cliente.Cellulare);
+                cmd.ExecuteNonQuery();
             }
             catch (Exception ex)
             {
@@ -148,11 +143,9 @@ namespace Weeklyapp.DAO
             {
                 using var conn = new SqlConnection(connectionString);
                 conn.Open();
-                using (var cmd = new SqlCommand(DELETE_CLIENTE, conn))
-                {
-                    cmd.Parameters.AddWithValue("@CodiceFiscale", codiceFiscale);
-                    cmd.ExecuteNonQuery();
-                }
+                using var cmd = new SqlCommand(DELETE_CLIENTE, conn);
+                cmd.Parameters.AddWithValue("@CodiceFiscale", codiceFiscale);
+                cmd.ExecuteNonQuery();
             }
             catch (Exception ex)
             {
