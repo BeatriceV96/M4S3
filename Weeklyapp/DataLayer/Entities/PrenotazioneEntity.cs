@@ -1,4 +1,6 @@
-﻿namespace Weeklyapp.DataLayer.Entities
+﻿using System;
+
+namespace Weeklyapp.DataLayer.Entities
 {
     public class PrenotazioneEntity
     {

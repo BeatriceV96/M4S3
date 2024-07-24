@@ -6,16 +6,16 @@ namespace Weeklyapp.Controllers
 {
     public class PrenotazioniController : Controller
     {
-        private readonly PrenotazioneService _prenotazioneService;
+        private readonly PrenotazioneService prenotazioneService;
 
         public PrenotazioniController(PrenotazioneService prenotazioneService)
         {
-            _prenotazioneService = prenotazioneService;
+            this.prenotazioneService = prenotazioneService;
         }
 
         public IActionResult Index()
         {
-            var prenotazioni = _prenotazioneService.GetAll();
+            var prenotazioni = prenotazioneService.GetAll();
             return View(prenotazioni);
         }
 
@@ -29,7 +29,7 @@ namespace Weeklyapp.Controllers
         {
             if (ModelState.IsValid)
             {
-                _prenotazioneService.Create(prenotazione);
+                prenotazioneService.Create(prenotazione);
                 return RedirectToAction("Index");
             }
             return View(prenotazione);
@@ -37,7 +37,7 @@ namespace Weeklyapp.Controllers
 
         public IActionResult Edit(int id)
         {
-            var prenotazione = _prenotazioneService.GetById(id);
+            var prenotazione = prenotazioneService.Get(id);
             if (prenotazione == null)
             {
                 return NotFound();
@@ -55,7 +55,7 @@ namespace Weeklyapp.Controllers
 
             if (ModelState.IsValid)
             {
-                _prenotazioneService.Update(prenotazione);
+                prenotazioneService.Edit(prenotazione);
                 return RedirectToAction("Index");
             }
             return View(prenotazione);
@@ -63,19 +63,18 @@ namespace Weeklyapp.Controllers
 
         public IActionResult Delete(int id)
         {
-            var prenotazione = _prenotazioneService.GetById(id);
+            var prenotazione = prenotazioneService.Get(id);
             if (prenotazione == null)
             {
                 return NotFound();
             }
-
             return View(prenotazione);
         }
 
         [HttpPost, ActionName("Delete")]
         public IActionResult DeleteConfirmed(int id)
         {
-            _prenotazioneService.Delete(id);
+            prenotazioneService.Delete(id);
             return RedirectToAction("Index");
         }
     }

@@ -50,13 +50,13 @@ namespace Weeklyapp.DAO
             }
             catch (Exception ex)
             {
-                logger.LogError(ex, "An error occurred while getting the bookings");
+                logger.LogError(ex, "An error occurred while getting the prenotazioni");
                 throw;
             }
             return result;
         }
 
-        public PrenotazioneEntity GetById(int id)
+        public PrenotazioneEntity Get(int id)
         {
             PrenotazioneEntity prenotazione = null;
             try
@@ -90,7 +90,7 @@ namespace Weeklyapp.DAO
             }
             catch (Exception ex)
             {
-                logger.LogError(ex, "An error occurred while getting the booking by ID");
+                logger.LogError(ex, "An error occurred while getting the prenotazione");
                 throw;
             }
             return prenotazione;
@@ -102,24 +102,22 @@ namespace Weeklyapp.DAO
             {
                 using var conn = new SqlConnection(connectionString);
                 conn.Open();
-                using (var cmd = new SqlCommand(INSERT_PRENOTAZIONE, conn))
-                {
-                    cmd.Parameters.AddWithValue("@CodiceFiscaleCliente", prenotazione.CodiceFiscaleCliente);
-                    cmd.Parameters.AddWithValue("@NumeroCamera", prenotazione.NumeroCamera);
-                    cmd.Parameters.AddWithValue("@DataPrenotazione", prenotazione.DataPrenotazione);
-                    cmd.Parameters.AddWithValue("@NumeroProgressivoAnno", prenotazione.NumeroProgressivoAnno);
-                    cmd.Parameters.AddWithValue("@Anno", prenotazione.Anno);
-                    cmd.Parameters.AddWithValue("@PeriodoDal", prenotazione.PeriodoDal);
-                    cmd.Parameters.AddWithValue("@PeriodoAl", prenotazione.PeriodoAl);
-                    cmd.Parameters.AddWithValue("@CaparraConfirmatoria", prenotazione.CaparraConfirmatoria);
-                    cmd.Parameters.AddWithValue("@Tariffa", prenotazione.Tariffa);
-                    cmd.Parameters.AddWithValue("@Dettagli", prenotazione.Dettagli);
-                    cmd.ExecuteNonQuery();
-                }
+                using var cmd = new SqlCommand(INSERT_PRENOTAZIONE, conn);
+                cmd.Parameters.AddWithValue("@CodiceFiscaleCliente", prenotazione.CodiceFiscaleCliente);
+                cmd.Parameters.AddWithValue("@NumeroCamera", prenotazione.NumeroCamera);
+                cmd.Parameters.AddWithValue("@DataPrenotazione", prenotazione.DataPrenotazione);
+                cmd.Parameters.AddWithValue("@NumeroProgressivoAnno", prenotazione.NumeroProgressivoAnno);
+                cmd.Parameters.AddWithValue("@Anno", prenotazione.Anno);
+                cmd.Parameters.AddWithValue("@PeriodoDal", prenotazione.PeriodoDal);
+                cmd.Parameters.AddWithValue("@PeriodoAl", prenotazione.PeriodoAl);
+                cmd.Parameters.AddWithValue("@CaparraConfirmatoria", prenotazione.CaparraConfirmatoria);
+                cmd.Parameters.AddWithValue("@Tariffa", prenotazione.Tariffa);
+                cmd.Parameters.AddWithValue("@Dettagli", prenotazione.Dettagli);
+                cmd.ExecuteNonQuery();
             }
             catch (Exception ex)
             {
-                logger.LogError(ex, "An error occurred while creating the booking");
+                logger.LogError(ex, "An error occurred while creating the prenotazione");
                 throw;
             }
         }
@@ -130,25 +128,23 @@ namespace Weeklyapp.DAO
             {
                 using var conn = new SqlConnection(connectionString);
                 conn.Open();
-                using (var cmd = new SqlCommand(UPDATE_PRENOTAZIONE, conn))
-                {
-                    cmd.Parameters.AddWithValue("@ID", prenotazione.ID);
-                    cmd.Parameters.AddWithValue("@CodiceFiscaleCliente", prenotazione.CodiceFiscaleCliente);
-                    cmd.Parameters.AddWithValue("@NumeroCamera", prenotazione.NumeroCamera);
-                    cmd.Parameters.AddWithValue("@DataPrenotazione", prenotazione.DataPrenotazione);
-                    cmd.Parameters.AddWithValue("@NumeroProgressivoAnno", prenotazione.NumeroProgressivoAnno);
-                    cmd.Parameters.AddWithValue("@Anno", prenotazione.Anno);
-                    cmd.Parameters.AddWithValue("@PeriodoDal", prenotazione.PeriodoDal);
-                    cmd.Parameters.AddWithValue("@PeriodoAl", prenotazione.PeriodoAl);
-                    cmd.Parameters.AddWithValue("@CaparraConfirmatoria", prenotazione.CaparraConfirmatoria);
-                    cmd.Parameters.AddWithValue("@Tariffa", prenotazione.Tariffa);
-                    cmd.Parameters.AddWithValue("@Dettagli", prenotazione.Dettagli);
-                    cmd.ExecuteNonQuery();
-                }
+                using var cmd = new SqlCommand(UPDATE_PRENOTAZIONE, conn);
+                cmd.Parameters.AddWithValue("@ID", prenotazione.ID);
+                cmd.Parameters.AddWithValue("@CodiceFiscaleCliente", prenotazione.CodiceFiscaleCliente);
+                cmd.Parameters.AddWithValue("@NumeroCamera", prenotazione.NumeroCamera);
+                cmd.Parameters.AddWithValue("@DataPrenotazione", prenotazione.DataPrenotazione);
+                cmd.Parameters.AddWithValue("@NumeroProgressivoAnno", prenotazione.NumeroProgressivoAnno);
+                cmd.Parameters.AddWithValue("@Anno", prenotazione.Anno);
+                cmd.Parameters.AddWithValue("@PeriodoDal", prenotazione.PeriodoDal);
+                cmd.Parameters.AddWithValue("@PeriodoAl", prenotazione.PeriodoAl);
+                cmd.Parameters.AddWithValue("@CaparraConfirmatoria", prenotazione.CaparraConfirmatoria);
+                cmd.Parameters.AddWithValue("@Tariffa", prenotazione.Tariffa);
+                cmd.Parameters.AddWithValue("@Dettagli", prenotazione.Dettagli);
+                cmd.ExecuteNonQuery();
             }
             catch (Exception ex)
             {
-                logger.LogError(ex, "An error occurred while updating the booking");
+                logger.LogError(ex, "An error occurred while updating the prenotazione");
                 throw;
             }
         }
@@ -159,15 +155,13 @@ namespace Weeklyapp.DAO
             {
                 using var conn = new SqlConnection(connectionString);
                 conn.Open();
-                using (var cmd = new SqlCommand(DELETE_PRENOTAZIONE, conn))
-                {
-                    cmd.Parameters.AddWithValue("@ID", id);
-                    cmd.ExecuteNonQuery();
-                }
+                using var cmd = new SqlCommand(DELETE_PRENOTAZIONE, conn);
+                cmd.Parameters.AddWithValue("@ID", id);
+                cmd.ExecuteNonQuery();
             }
             catch (Exception ex)
             {
-                logger.LogError(ex, "An error occurred while deleting the booking");
+                logger.LogError(ex, "An error occurred while deleting the prenotazione");
                 throw;
             }
         }

@@ -1,0 +1,61 @@
+﻿@model Weeklyapp.DataLayer.Entities.PrenotazioneEntity
+
+@{
+    ViewData["Title"] = "Modifica Prenotazione";
+}
+
+<h2>Modifica Prenotazione</h2>
+
+<form asp-action="Edit">
+    <div class="form-group">
+        <label for="ID">ID</label>
+        <input type="text" id="ID" name="ID" class="form-control" readonly value="@Model.ID" />
+    </div>
+    <div class="form-group">
+        <label for="CodiceFiscaleCliente">Codice Fiscale Cliente</label>
+        <input type="text" id="CodiceFiscaleCliente" name="CodiceFiscaleCliente" class="form-control" value="@Model.CodiceFiscaleCliente" />
+    </div>
+    <div class="form-group">
+        <label for="NumeroCamera">Numero Camera</label>
+        <input type="text" id="NumeroCamera" name="NumeroCamera" class="form-control" value="@Model.NumeroCamera" />
+    </div>
+    <div class="form-group">
+        <label for="DataPrenotazione">Data Prenotazione</label>
+        <input type="date" id="DataPrenotazione" name="DataPrenotazione" class="form-control" value="@Model.DataPrenotazione.ToString("yyyy-MM-dd")" />
+    </div>
+    <div class="form-group">
+        <label for="NumeroProgressivoAnno">Numero Progressivo Anno</label>
+        <input type="text" id="NumeroProgressivoAnno" name="NumeroProgressivoAnno" class="form-control" value="@Model.NumeroProgressivoAnno" />
+    </div>
+    <div class="form-group">
+        <label for="Anno">Anno</label>
+        <input type="text" id="Anno" name="Anno" class="form-control" value="@Model.Anno" />
+    </div>
+    <div class="form-group">
+        <label for="PeriodoDal">Periodo Dal</label>
+        <input type="date" id="PeriodoDal" name="PeriodoDal" class="form-control" value="@Model.PeriodoDal.ToString("yyyy-MM-dd")" />
+    </div>
+    <div class="form-group">
+        <label for="PeriodoAl">Periodo Al</label>
+        <input type="date" id="PeriodoAl" name="PeriodoAl" class="form-control" value="@Model.PeriodoAl.ToString("yyyy-MM-dd")" />
+    </div>
+    <div class="form-group">
+        <label for="CaparraConfirmatoria">Caparra Confirmatoria</label>
+        <input type="text" id="CaparraConfirmatoria" name="CaparraConfirmatoria" class="form-control" value="@Model.CaparraConfirmatoria" />
+    </div>
+    <div class="form-group">
+        <label for="Tariffa">Tariffa</label>
+        <input type="text" id="Tariffa" name="Tariffa" class="form-control" value="@Model.Tariffa" />
+    </div>
+    <div class="form-group">
+        <label for="Dettagli">Dettagli</label>
+        <input type="text" id="Dettagli" name="Dettagli" class="form-control" value="@Model.Dettagli" />
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Salva" class="btn btn-primary" />
+    </div>
+</form>
+
+<div>
+    <a asp-action="Index">Torna alla lista</a>
+</div>

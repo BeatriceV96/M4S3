@@ -1,0 +1,43 @@
+﻿@model Weeklyapp.DataLayer.Entities.PrenotazioneEntity
+
+@{
+    ViewData["Title"] = "Elimina Prenotazione";
+}
+
+<h2>Elimina Prenotazione</h2>
+
+<h3>Sei sicuro di voler eliminare questa prenotazione?</h3>
+<div>
+    <h4>Prenotazione</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">ID</dt>
+        <dd class="col-sm-10">@Model.ID</dd>
+        <dt class="col-sm-2">Codice Fiscale Cliente</dt>
+        <dd class="col-sm-10">@Model.CodiceFiscaleCliente</dd>
+        <dt class="col-sm-2">Numero Camera</dt>
+        <dd class="col-sm-10">@Model.NumeroCamera</dd>
+        <dt class="col-sm-2">Data Prenotazione</dt>
+        <dd class="col-sm-10">@Model.DataPrenotazione.ToString("yyyy-MM-dd")</dd>
+        <dt class="col-sm-2">Numero Progressivo Anno</dt>
+        <dd class="col-sm-10">@Model.NumeroProgressivoAnno</dd>
+        <dt class="col-sm-2">Anno</dt>
+        <dd class="col-sm-10">@Model.Anno</dd>
+        <dt class="col-sm-2">Periodo Dal</dt>
+        <dd class="col-sm-10">@Model.PeriodoDal.ToString("yyyy-MM-dd")</dd>
+        <dt class="col-sm-2">Periodo Al</dt>
+        <dd class="col-sm-10">@Model.PeriodoAl.ToString("yyyy-MM-dd")</dd>
+        <dt class="col-sm-2">Caparra Confirmatoria</dt>
+        <dd class="col-sm-10">@Model.CaparraConfirmatoria</dd>
+        <dt class="col-sm-2">Tariffa</dt>
+        <dd class="col-sm-10">@Model.Tariffa</dd>
+        <dt class="col-sm-2">Dettagli</dt>
+        <dd class="col-sm-10">@Model.Dettagli</dd>
+    </dl>
+
+    <form asp-action="DeleteConfirmed">
+        <input type="hidden" asp-for="ID" />
+        <input type="submit" value="Elimina" class="btn btn-danger" /> |
+        <a asp-action="Index" class="btn btn-secondary">Annulla</a>
+    </form>
+</div>

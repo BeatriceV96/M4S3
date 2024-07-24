@@ -4,84 +4,48 @@
     ViewData["Title"] = "Prenotazioni";
 }
 
-<div class="container mt-4">
-    <div class="text-center mb-4">
-        <h2>Elenco e Creazione/Modifica Prenotazioni</h2>
-    </div>
-    <div class="mb-3 text-right">
-        <a class="btn btn-primary" asp-action="Create">Crea</a>
-    </div>
+<h2>Lista Prenotazioni</h2>
 
-    <div class="row">
-        <div class="col-md-12 mb-4">
-            <div class="card shadow-sm">
-                <div class="card-body">
-                    <h3 class="card-title">Elenco Prenotazioni</h3>
-                    <table class="table table-hover">
-                        <thead class="thead-dark">
-                            <tr>
-                                <th>ID</th>
-                                <th>Codice Fiscale Cliente</th>
-                                <th>Numero Camera</th>
-                                <th>Data Prenotazione</th>
-                                <th>Numero Progressivo Anno</th>
-                                <th>Anno</th>
-                                <th>Periodo Dal</th>
-                                <th>Periodo Al</th>
-                                <th>Caparra Confirmatoria</th>
-                                <th>Tariffa</th>
-                                <th>Dettagli</th>
-                                <th>Azioni</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var prenotazione in Model)
-                            {
-                                <tr>
-                                    <td>@prenotazione.ID</td>
-                                    <td>@prenotazione.CodiceFiscaleCliente</td>
-                                    <td>@prenotazione.NumeroCamera</td>
-                                    <td>@prenotazione.DataPrenotazione</td>
-                                    <td>@prenotazione.NumeroProgressivoAnno</td>
-                                    <td>@prenotazione.Anno</td>
-                                    <td>@prenotazione.PeriodoDal</td>
-                                    <td>@prenotazione.PeriodoAl</td>
-                                    <td>@prenotazione.CaparraConfirmatoria</td>
-                                    <td>@prenotazione.Tariffa</td>
-                                    <td>@prenotazione.Dettagli</td>
-                                    <td>
-                                        <a class="btn btn-warning" asp-action="Edit" asp-route-id="@prenotazione.ID">Modifica</a>
-                                        <a class="btn btn-danger" asp-action="Delete" asp-route-id="@prenotazione.ID">Elimina</a>
-                                    </td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<style>
-    .card {
-        transition: transform 0.3s, box-shadow 0.3s;
-    }
-
-        .card:hover {
-            transform: scale(1.02);
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+<p>
+    <a asp-action="Create" class="btn btn-primary">Crea Nuova Prenotazione</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Codice Fiscale Cliente</th>
+            <th>Numero Camera</th>
+            <th>Data Prenotazione</th>
+            <th>Numero Progressivo Anno</th>
+            <th>Anno</th>
+            <th>Periodo Dal</th>
+            <th>Periodo Al</th>
+            <th>Caparra Confirmatoria</th>
+            <th>Tariffa</th>
+            <th>Dettagli</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.ID</td>
+                <td>@item.CodiceFiscaleCliente</td>
+                <td>@item.NumeroCamera</td>
+                <td>@item.DataPrenotazione.ToString("yyyy-MM-dd")</td>
+                <td>@item.NumeroProgressivoAnno</td>
+                <td>@item.Anno</td>
+                <td>@item.PeriodoDal.ToString("yyyy-MM-dd")</td>
+                <td>@item.PeriodoAl.ToString("yyyy-MM-dd")</td>
+                <td>@item.CaparraConfirmatoria</td>
+                <td>@item.Tariffa</td>
+                <td>@item.Dettagli</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.ID" class="btn btn-warning">Modifica</a> |
+                    <a asp-action="Delete" asp-route-id="@item.ID" class="btn btn-danger">Elimina</a>
+                </td>
+            </tr>
         }
-
-    .form-group label {
-        font-weight: bold;
-    }
-
-    .text-center {
-        text-align: center;
-    }
-
-    .btn {
-        margin-right: 5px;
-    }
-</style>
+    </tbody>
+</table>

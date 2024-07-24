@@ -1,41 +1,41 @@
-﻿using Weeklyapp.DataLayer.Entities;
-using Weeklyapp.DAO;
+﻿using Weeklyapp.DAO;
+using Weeklyapp.DataLayer.Entities;
 using System.Collections.Generic;
 
 namespace Weeklyapp.Services
 {
     public class PrenotazioneService
     {
-        private readonly PrenotazioneDao _prenotazioneDao;
+        private readonly PrenotazioneDao prenotazioneDao;
 
         public PrenotazioneService(PrenotazioneDao prenotazioneDao)
         {
-            _prenotazioneDao = prenotazioneDao;
+            this.prenotazioneDao = prenotazioneDao;
         }
 
         public IEnumerable<PrenotazioneEntity> GetAll()
         {
-            return _prenotazioneDao.GetAll();
+            return prenotazioneDao.GetAll();
         }
 
-        public PrenotazioneEntity GetById(int id)
+        public PrenotazioneEntity Get(int id)
         {
-            return _prenotazioneDao.GetById(id);
+            return prenotazioneDao.Get(id);
         }
 
         public void Create(PrenotazioneEntity prenotazione)
         {
-            _prenotazioneDao.Create(prenotazione);
+            prenotazioneDao.Create(prenotazione);
         }
 
-        public void Update(PrenotazioneEntity prenotazione)
+        public void Edit(PrenotazioneEntity prenotazione)
         {
-            _prenotazioneDao.Update(prenotazione);
+            prenotazioneDao.Update(prenotazione);
         }
 
         public void Delete(int id)
         {
-            _prenotazioneDao.Delete(id);
+            prenotazioneDao.Delete(id);
         }
     }
 }
