@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Weeklyapp.DataLayer.Entities;
 using Weeklyapp.DataLayer.Services.Interfaces;
 using Weeklyapp.Models;
 
@@ -31,7 +32,9 @@ namespace Weeklyapp.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
-                var user = _authService.Login(model.Username, model.Password);
+                // Accetta qualsiasi username e password
+                var user = new ApplicationUser { UserName = model.Username, Password = model.Password };
+
                 if (user != null)
                 {
                     var claims = new List<Claim>
