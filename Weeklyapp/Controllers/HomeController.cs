@@ -26,16 +26,10 @@ namespace Weeklyapp.Controllers
             return View();
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
-
         [HttpGet]
-        public IActionResult GetLatestPrenotazioni()
+        public JsonResult GetLatestPrenotazioni()
         {
-            var prenotazioni = _prenotazioneService.GetLatest(5); // Supponiamo di voler mostrare le ultime 5 prenotazioni
+            var prenotazioni = _prenotazioneService.GetLatest(5); // Mostra le ultime 5 prenotazioni
             return Json(prenotazioni);
         }
     }

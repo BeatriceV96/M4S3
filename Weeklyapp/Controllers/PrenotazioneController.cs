@@ -78,22 +78,30 @@ namespace Weeklyapp.Controllers
             return RedirectToAction("Index");
         }
 
+        /*[HttpGet]
+        public JsonResult SearchByCodiceFiscale(string codiceFiscale)
+        {
+            var prenotazioni = prenotazioneService.GetByCodiceFiscale(codiceFiscale);
+            return Json(prenotazioni);
+        }
+
+        [HttpGet]
+        public JsonResult GetTotalPensioneCompleta()
+        {
+            var total = prenotazioneService.GetTotalPrenotazioniPensioneCompleta();
+            return Json(total);
+        }*/    // Questi metodi sono stati spostati in PrenotazioniApiController me li gestisco lì ora dall'API controller
+
         public IActionResult Search()
         {
             return View();
         }
 
+        [HttpPost]
         public IActionResult SearchResults(string codiceFiscale)
         {
             var prenotazioni = prenotazioneService.GetByCodiceFiscale(codiceFiscale);
-            return View(prenotazioni);
-        }
-
-        [HttpGet]
-        public IActionResult GetLatestPrenotazioni(int count)
-        {
-            var latestPrenotazioni = prenotazioneService.GetLatest(count);
-            return PartialView("_LatestPrenotazioniPartial", latestPrenotazioni);
+            return Json(prenotazioni);
         }
     }
 }

@@ -15,6 +15,7 @@ namespace Weeklyapp.DAO
         private const string DELETE_PRENOTAZIONE = "DELETE FROM Prenotazioni WHERE ID = @ID";
         private const string SELECT_PRENOTAZIONI_BY_CODICE_FISCALE = "SELECT * FROM Prenotazioni WHERE CodiceFiscaleCliente = @CodiceFiscaleCliente";
         private const string SELECT_TOTAL_PRENOTAZIONI_PENSIONE_COMPLETA = "SELECT COUNT(*) FROM Prenotazioni WHERE Dettagli = 'pensione completa'";
+        private const string SELECT_LATEST_PRENOTAZIONI = "SELECT TOP (@Count) * FROM Prenotazioni ORDER BY DataPrenotazione DESC";
 
         public PrenotazioneDao(IConfiguration configuration, ILogger<PrenotazioneDao> logger) : base(configuration, logger) { }
 
@@ -281,7 +282,6 @@ namespace Weeklyapp.DAO
             return result;
         }
 
-
         public int GetTotalPrenotazioniPensioneCompleta()
         {
             try
@@ -307,8 +307,9 @@ namespace Weeklyapp.DAO
             {
                 using var conn = new SqlConnection(connectionString);
                 conn.Open();
-                using (var cmd = new SqlCommand($"SELECT TOP {count} * FROM Prenotazioni ORDER BY DataPrenotazione DESC", conn))
+                using (var cmd = new SqlCommand(SELECT_LATEST_PRENOTAZIONI, conn))
                 {
+                    cmd.Parameters.AddWithValue("@Count", count);
                     using (var reader = cmd.ExecuteReader())
                     {
                         while (reader.Read())
@@ -339,7 +340,5 @@ namespace Weeklyapp.DAO
             }
             return result;
         }
-
-
     }
 }

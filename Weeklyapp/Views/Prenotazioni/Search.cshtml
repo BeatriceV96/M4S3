@@ -9,15 +9,43 @@
         <label for="codiceFiscale">Codice Fiscale Cliente</label>
         <input type="text" class="form-control" id="codiceFiscale" name="codiceFiscale" required />
     </div>
-    <button type="submit" class="btn btn-primary">Cerca</button>
+    <button id="searchPrenotazioni" type="button" class="btn btn-primary">Cerca</button>
 </form>
+
+<h3>Risultati della Ricerca</h3>
+<table class="table" id="prenotazioniTable">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Codice Fiscale Cliente</th>
+            <th>Numero Camera</th>
+            <th>Data Prenotazione</th>
+            <th>Numero Progressivo Anno</th>
+            <th>Anno</th>
+            <th>Periodo Dal</th>
+            <th>Periodo Al</th>
+            <th>Caparra Confirmatoria</th>
+            <th>Tariffa</th>
+            <th>Dettagli</th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+
+<h3>Totale Prenotazioni Pensione Completa</h3>
+<p id="totalPensioneCompleta">0</p>
 
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script>
     $(document).ready(function () {
+        // Funzione chiamata quando si clicca sul pulsante di ricerca
         $("#searchPrenotazioni").click(function () {
+            // Ottiene il valore del codice fiscale inserito
             var codiceFiscale = $("#codiceFiscale").val();
+            // Effettua una richiesta GET all'API per ottenere le prenotazioni per il codice fiscale specificato
             $.get("/api/PrenotazioniApi/ByCodiceFiscale/" + codiceFiscale, function (data) {
+                // Prepara le righe della tabella per mostrare i risultati delle prenotazioni
                 var rows = "";
                 $.each(data, function (index, prenotazione) {
                     rows += "<tr>" +
@@ -34,12 +62,19 @@
                         "<td>" + prenotazione.dettagli + "</td>" +
                         "</tr>";
                 });
+                // Aggiorna il corpo della tabella con i nuovi dati
                 $("#prenotazioniTable tbody").html(rows);
             });
         });
 
+        // Effettua una richiesta GET all'API per ottenere il totale delle prenotazioni con pensione completa
         $.get("/api/PrenotazioniApi/TotalPensioneCompleta", function (data) {
+            // Aggiorna il testo del paragrafo con il totale delle prenotazioni
             $("#totalPensioneCompleta").text(data);
         });
     });
 </script>
+
+<!--Contiene un modulo per inserire il codice fiscale e cercare le prenotazioni.
+Utilizza AJAX per inviare richieste al controller API e ottenere i risultati delle prenotazioni senza ricaricare la pagina.
+Visualizza i risultati in una tabella e mostra il totale delle prenotazioni con pensione completa.-->

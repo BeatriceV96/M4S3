@@ -3,9 +3,8 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Benvenuto in WeeklyApp</h1>
-    <p class="lead">Il software per la gestione delle prenotazioni di un hotel.</p>
-    <p>Di seguito troverai le ultime prenotazioni effettuate:</p>
+    <h1 class="display-4">Welcome to WeeklyApp</h1>
+    <p>Benvenuto in WeeklyApp, il software per la gestione delle prenotazioni di un hotel.</p>
 </div>
 
 <div id="latest-prenotazioni-container" class="container mt-4">
@@ -14,6 +13,7 @@
 
 @section Scripts {
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
         $(document).ready(function () {
             // Carica le ultime prenotazioni
@@ -24,7 +24,7 @@
                     var container = $('#latest-prenotazioni-container');
                     container.empty();
 
-                    var table = $('<table>').addClass('table table-striped table-bordered');
+                    var table = $('<table>').addClass('table table-striped');
                     var thead = $('<thead>').append(
                         $('<tr>').append(
                             $('<th>').text('ID'),
