@@ -1,0 +1,57 @@
+﻿@model Weeklyapp.DataLayer.Entities.ServizioAggiuntivoEntity
+
+@{
+    ViewData["Title"] = "Elimina Servizio Aggiuntivo";
+}
+
+<h2>Elimina Servizio Aggiuntivo</h2>
+
+<h3>Sei sicuro di voler eliminare questo servizio aggiuntivo?</h3>
+<div>
+    <h4>Servizio Aggiuntivo</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            ID
+        </dt>
+        <dd class="col-sm-10">
+            @Model.ID
+        </dd>
+        <dt class="col-sm-2">
+            ID Prenotazione
+        </dt>
+        <dd class="col-sm-10">
+            @Model.IDPrenotazione
+        </dd>
+        <dt class="col-sm-2">
+            Data Servizio
+        </dt>
+        <dd class="col-sm-10">
+            @Model.DataServizio
+        </dd>
+        <dt class="col-sm-2">
+            Descrizione
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Descrizione
+        </dd>
+        <dt class="col-sm-2">
+            Quantità
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Quantita
+        </dd>
+        <dt class="col-sm-2">
+            Prezzo
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Prezzo
+        </dd>
+    </dl>
+
+    <form asp-action="Delete" method="post">
+        <input type="hidden" asp-for="ID" />
+        <input type="submit" value="Elimina" class="btn btn-danger" /> |
+        <a asp-action="Index" class="btn btn-secondary">Annulla</a>
+    </form>
+</div>

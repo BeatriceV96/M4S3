@@ -15,6 +15,7 @@ namespace Weeklyapp.DAO
         private const string DELETE_PRENOTAZIONE = "DELETE FROM Prenotazioni WHERE ID = @ID";
         private const string SELECT_PRENOTAZIONI_BY_CODICE_FISCALE = "SELECT * FROM Prenotazioni WHERE CodiceFiscaleCliente = @CodiceFiscaleCliente";
         private const string SELECT_TOTAL_PRENOTAZIONI_PENSIONE_COMPLETA = "SELECT COUNT(*) FROM Prenotazioni WHERE Dettagli = 'pensione completa'";
+        private const string SELECT_PRENOTAZIONI_PENSIONE_COMPLETA = "SELECT * FROM Prenotazioni WHERE Dettagli = 'pensione completa'";
         private const string SELECT_LATEST_PRENOTAZIONI = "SELECT TOP (@Count) * FROM Prenotazioni ORDER BY DataPrenotazione DESC";
 
         public PrenotazioneDao(IConfiguration configuration, ILogger<PrenotazioneDao> logger) : base(configuration, logger) { }
@@ -300,6 +301,47 @@ namespace Weeklyapp.DAO
             }
         }
 
+        // Aggiungi il metodo per ottenere le prenotazioni con pensione completa
+        public IEnumerable<PrenotazioneEntity> GetPrenotazioniPensioneCompleta()
+        {
+            var result = new List<PrenotazioneEntity>();
+            try
+            {
+                using var conn = new SqlConnection(connectionString);
+                conn.Open();
+                using (var cmd = new SqlCommand(SELECT_PRENOTAZIONI_PENSIONE_COMPLETA, conn))
+                {
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            var prenotazione = new PrenotazioneEntity
+                            {
+                                ID = reader.GetInt32(0),
+                                CodiceFiscaleCliente = reader.GetString(1),
+                                NumeroCamera = reader.GetInt32(2),
+                                DataPrenotazione = reader.GetDateTime(3),
+                                NumeroProgressivoAnno = reader.GetInt32(4),
+                                Anno = reader.GetInt32(5),
+                                PeriodoDal = reader.GetDateTime(6),
+                                PeriodoAl = reader.GetDateTime(7),
+                                CaparraConfirmatoria = reader.GetDecimal(8),
+                                Tariffa = reader.GetDecimal(9),
+                                Dettagli = reader.GetString(10)
+                            };
+                            result.Add(prenotazione);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "An error occurred while getting the prenotazioni for pensione completa");
+                throw;
+            }
+            return result;
+        }
+
         public IEnumerable<PrenotazioneEntity> GetLatest(int count)
         {
             var result = new List<PrenotazioneEntity>();
@@ -340,5 +382,25 @@ namespace Weeklyapp.DAO
             }
             return result;
         }
+
+        public bool PrenotazioneExists(int id)
+        {
+            try
+            {
+                using var conn = new SqlConnection(connectionString);
+                conn.Open();
+                using (var cmd = new SqlCommand("SELECT COUNT(1) FROM Prenotazioni WHERE ID = @ID", conn))
+                {
+                    cmd.Parameters.AddWithValue("@ID", id);
+                    return (int)cmd.ExecuteScalar() > 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "An error occurred while checking if the prenotazione exists");
+                throw;
+            }
+        }
+
     }
 }

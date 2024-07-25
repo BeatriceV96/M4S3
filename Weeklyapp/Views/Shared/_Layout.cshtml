@@ -7,19 +7,6 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Weeklyapp.styles.css" asp-append-version="true" />
-    <style>
-        .navbar-nav .nav-item:last-child {
-            margin-left: auto;
-        }
-
-        .navbar-nav .nav-link {
-            padding: 0.5rem 1rem;
-        }
-
-        .navbar-nav .form-inline .btn-link {
-            padding: 0.5rem 1rem;
-        }
-    </style>
 </head>
 <body>
     <header>
@@ -48,7 +35,7 @@
                         </li>
                         <li class="nav-item">
                             <form asp-area="" asp-controller="Account" asp-action="Logout" method="post" class="form-inline">
-                                <button type="submit" class="btn btn-link nav-link" ; border: none; background: none;">Logout</button>
+                                <button type="submit" class="btn btn-link nav-link" style="border: none; background: none;">Logout</button>
                             </form>
                         </li>
                     }
@@ -59,7 +46,6 @@
                         </li>
                     }
                 </ul>
-            </div>
             </div>
         </nav>
     </header>

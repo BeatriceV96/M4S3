@@ -1,0 +1,48 @@
+﻿@model Weeklyapp.DataLayer.Entities.ServizioAggiuntivoEntity
+
+@{
+    ViewData["Title"] = "Modifica Servizio Aggiuntivo";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<form asp-action="Edit">
+    <div class="form-group">
+        <label asp-for="IDPrenotazione" class="control-label"></label>
+        <input asp-for="IDPrenotazione" class="form-control" />
+        <span asp-validation-for="IDPrenotazione" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="DataServizio" class="control-label"></label>
+        <input asp-for="DataServizio" class="form-control" />
+        <span asp-validation-for="DataServizio" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Descrizione" class="control-label"></label>
+        <input asp-for="Descrizione" class="form-control" />
+        <span asp-validation-for="Descrizione" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Quantita" class="control-label"></label>
+        <input asp-for="Quantita" class="form-control" />
+        <span asp-validation-for="Quantita" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Prezzo" class="control-label"></label>
+        <input asp-for="Prezzo" class="form-control" />
+        <span asp-validation-for="Prezzo" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Salva" class="btn btn-primary" />
+    </div>
+</form>
+
+<div>
+    <a asp-action="Index">Indietro alla lista</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

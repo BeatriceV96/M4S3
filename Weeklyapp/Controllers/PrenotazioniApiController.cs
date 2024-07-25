@@ -36,5 +36,3 @@ namespace Weeklyapp.Controllers
         }
     }
 }
-
-//Usa il servizio delle prenotazioni (PrenotazioneService) per eseguire le operazioni necessarie.
