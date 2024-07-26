@@ -53,29 +53,6 @@ namespace Weeklyapp.DAO
             return result;
         }
 
-        public void Create(ClienteEntity cliente)
-        {
-            try
-            {
-                using var conn = new SqlConnection(connectionString);
-                conn.Open();
-                using var cmd = new SqlCommand(INSERT_CLIENTE, conn);
-                cmd.Parameters.AddWithValue("@CodiceFiscale", cliente.CodiceFiscale);
-                cmd.Parameters.AddWithValue("@Cognome", cliente.Cognome);
-                cmd.Parameters.AddWithValue("@Nome", cliente.Nome);
-                cmd.Parameters.AddWithValue("@Citta", cliente.Citta);
-                cmd.Parameters.AddWithValue("@Provincia", cliente.Provincia);
-                cmd.Parameters.AddWithValue("@Email", cliente.Email);
-                cmd.Parameters.AddWithValue("@Telefono", cliente.Telefono);
-                cmd.Parameters.AddWithValue("@Cellulare", cliente.Cellulare);
-                cmd.ExecuteNonQuery();
-            }
-            catch (Exception ex)
-            {
-                logger.LogError(ex, "An error occurred while creating the client");
-                throw;
-            }
-        }
         public ClienteEntity Get(string codiceFiscale)
         {
             ClienteEntity cliente = null;
@@ -113,7 +90,31 @@ namespace Weeklyapp.DAO
             return cliente;
         }
 
-        public void Edit(ClienteEntity cliente)
+        public void Create(ClienteEntity cliente)
+        {
+            try
+            {
+                using var conn = new SqlConnection(connectionString);
+                conn.Open();
+                using var cmd = new SqlCommand(INSERT_CLIENTE, conn);
+                cmd.Parameters.AddWithValue("@CodiceFiscale", cliente.CodiceFiscale);
+                cmd.Parameters.AddWithValue("@Cognome", cliente.Cognome);
+                cmd.Parameters.AddWithValue("@Nome", cliente.Nome);
+                cmd.Parameters.AddWithValue("@Citta", cliente.Citta);
+                cmd.Parameters.AddWithValue("@Provincia", cliente.Provincia);
+                cmd.Parameters.AddWithValue("@Email", cliente.Email);
+                cmd.Parameters.AddWithValue("@Telefono", cliente.Telefono);
+                cmd.Parameters.AddWithValue("@Cellulare", cliente.Cellulare);
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "An error occurred while creating the client");
+                throw;
+            }
+        }
+
+        public void Update(ClienteEntity cliente)
         {
             try
             {

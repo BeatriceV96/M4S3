@@ -6,36 +6,36 @@ namespace Weeklyapp.Services
 {
     public class ClienteService
     {
-        private readonly ClienteDao clienteDao;
+        private readonly ClienteDao _clienteDao;
 
         public ClienteService(ClienteDao clienteDao)
         {
-            this.clienteDao = clienteDao;
+            _clienteDao = clienteDao;
         }
 
         public IEnumerable<ClienteEntity> GetAll()
         {
-            return clienteDao.GetAll();
+            return _clienteDao.GetAll();
         }
 
-        public ClienteEntity Get(string codiceFiscale)
+        public ClienteEntity Get(string id)
         {
-            return clienteDao.Get(codiceFiscale);
+            return _clienteDao.Get(id);
         }
 
         public void Create(ClienteEntity cliente)
         {
-            clienteDao.Create(cliente);
+            _clienteDao.Create(cliente);
         }
 
-        public void Edit(ClienteEntity cliente)
+        public void Update(ClienteEntity cliente)
         {
-            clienteDao.Edit(cliente);
+            _clienteDao.Update(cliente);
         }
 
-        public void Delete(string codiceFiscale)
+        public void Delete(string id)
         {
-            clienteDao.Delete(codiceFiscale);
+            _clienteDao.Delete(id);
         }
     }
 }

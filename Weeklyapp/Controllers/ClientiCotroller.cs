@@ -34,17 +34,8 @@ namespace Weeklyapp.Controllers
             }
             return View(cliente);
         }
-        public IActionResult Edit(string id)
-        {
-            var cliente = clienteService.Get(id);
-            if (cliente == null)
-            {
-                return NotFound();
-            }
-            return View(cliente);
-        }
 
-        public IActionResult Update(string id)
+        public IActionResult Edit(string id)
         {
             var cliente = clienteService.Get(id);
             if (cliente == null)
@@ -64,7 +55,7 @@ namespace Weeklyapp.Controllers
 
             if (ModelState.IsValid)
             {
-                clienteService.Edit(cliente);
+                clienteService.Update(cliente);
                 return RedirectToAction("Index");
             }
             return View(cliente);
