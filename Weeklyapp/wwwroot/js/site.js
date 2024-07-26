@@ -1,4 +1,55 @@
 ﻿$(document).ready(function () {
+    function login() {
+        var model = {
+            Username: $('#Username').val(),
+            Password: $('#Password').val()
+        };
+
+        $.ajax({
+            url: '/Account/Login',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(model),
+            success: function (response) {
+                localStorage.setItem('token', response.token);
+                window.location.href = '/';
+            },
+            error: function (xhr, status, error) {
+                alert('Login non valido');
+            }
+        });
+    }
+
+    function checkAuth() {
+        var token = localStorage.getItem('token');
+        if (token) {
+            // Logica per verificare il token e mostrare le opzioni di menu corrette
+            $('.auth-required').show();
+            $('.guest-only').hide();
+        } else {
+            $('.auth-required').hide();
+            $('.guest-only').show();
+        }
+    }
+
+    $('#loginForm').on('submit', function (e) {
+        e.preventDefault();
+        login();
+    });
+
+    $('#logoutForm').on('submit', function (e) {
+        e.preventDefault();
+        localStorage.removeItem('token');
+        $.post('/Account/Logout', function () {
+            window.location.href = '/';
+        });
+    });
+
+    checkAuth();
+});
+
+// Codice per la ricerca delle prenotazioni
+$(document).ready(function () {
     // Funzione per ottenere le prenotazioni per codice fiscale
     $("#searchPrenotazioni").click(function () {
         var codiceFiscale = $("#codiceFiscale").val();

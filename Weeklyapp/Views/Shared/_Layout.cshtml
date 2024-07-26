@@ -16,35 +16,29 @@
                     <li class="nav-item">
                         <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                     </li>
-                    @if (User.Identity.IsAuthenticated)
-                    {
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Clienti" asp-action="Index">Clienti</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Prenotazioni" asp-action="Index">Prenotazioni</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Camere" asp-action="Index">Camere</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="ServiziAggiuntivi" asp-action="Index">Servizi Aggiuntivi</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Prenotazioni" asp-action="Search">Ricerca Prenotazioni</a>
-                        </li>
-                        <li class="nav-item">
-                            <form asp-area="" asp-controller="Account" asp-action="Logout" method="post" class="form-inline">
-                                <button type="submit" class="btn btn-link nav-link" style="border: none; background: none;">Logout</button>
-                            </form>
-                        </li>
-                    }
-                    else
-                    {
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Account" asp-action="Login">Login</a>
-                        </li>
-                    }
+                    <li class="nav-item guest-only">
+                        <a class="nav-link" asp-area="" asp-controller="Account" asp-action="Login">Login</a>
+                    </li>
+                    <li class="nav-item auth-required">
+                        <a class="nav-link" asp-area="" asp-controller="Clienti" asp-action="Index">Clienti</a>
+                    </li>
+                    <li class="nav-item auth-required">
+                        <a class="nav-link" asp-area="" asp-controller="Prenotazioni" asp-action="Index">Prenotazioni</a>
+                    </li>
+                    <li class="nav-item auth-required">
+                        <a class="nav-link" asp-area="" asp-controller="Camere" asp-action="Index">Camere</a>
+                    </li>
+                    <li class="nav-item auth-required">
+                        <a class="nav-link" asp-area="" asp-controller="ServiziAggiuntivi" asp-action="Index">Servizi Aggiuntivi</a>
+                    </li>
+                    <li class="nav-item auth-required">
+                        <a class="nav-link" asp-area="" asp-controller="Prenotazioni" asp-action="Search">Ricerca Prenotazioni</a>
+                    </li>
+                    <li class="nav-item auth-required">
+                        <form id="logoutForm" asp-area="" asp-controller="Account" asp-action="Logout" method="post" class="form-inline">
+                            <button type="submit" class="btn btn-link nav-link" style="border: none; background: none;">Logout</button>
+                        </form>
+                    </li>
                 </ul>
             </div>
         </nav>

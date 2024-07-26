@@ -1,9 +1,11 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Weeklyapp.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 using Weeklyapp.DAO;
-using Weeklyapp.DataLayer.Entities;
 using Weeklyapp.DataLayer.Services.Data;
 using Weeklyapp.DataLayer.Services.Interfaces;
+using Weeklyapp.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,16 +22,40 @@ builder.Services.AddScoped<ServizioAggiuntivoService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<CheckoutService>();
 
-// Aggiungi servizi al container
-builder.Services.AddControllersWithViews();
+// Configura l'autenticazione JWT
+var key = Encoding.ASCII.GetBytes("lKpE9r7x@!Z&hC2vB7x#T4kW8uQ$eR3tY5iU2oP1sL&dM9n");
 
-// Configura l'autenticazione
-builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-    .AddCookie(options =>
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.RequireHttpsMetadata = false;
+    options.SaveToken = true;
+    options.TokenValidationParameters = new TokenValidationParameters
     {
-        options.LoginPath = "/Account/Login";
-        options.LogoutPath = "/Account/Logout";
-    });
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = "il_tuo_issuer",
+        ValidAudience = "la_tua_audience",
+        IssuerSigningKey = new SymmetricSecurityKey(key)
+    };
+})
+.AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
+{
+    options.LoginPath = "/Account/Login";
+    options.LogoutPath = "/Account/Logout";
+});
+
+// Aggiungi i servizi di autorizzazione
+builder.Services.AddAuthorization();
+
+// Aggiungi i servizi dei controller e MVC
+builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
